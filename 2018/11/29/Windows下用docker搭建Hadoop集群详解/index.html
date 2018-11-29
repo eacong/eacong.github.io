@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://eacong.github.io">
-  <title>Eacong&#39;s blog</title>
+  <title>Windows下用docker搭建Hadoop集群详解 | Eacong&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Windows下用docker搭建Hadoop集群详解本次利用docker (windows版本)在PC机上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
+  <meta name="description" content="本次利用docker (windows版本)在PC机上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
+<meta name="keywords" content="Hadoop,ubutnu,docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Eacong&#39;s blog">
+<meta property="og:title" content="Windows下用docker搭建Hadoop集群详解">
 <meta property="og:url" content="https://eacong.github.io/2018/11/29/Windows下用docker搭建Hadoop集群详解/index.html">
 <meta property="og:site_name" content="Eacong&#39;s blog">
-<meta property="og:description" content="Windows下用docker搭建Hadoop集群详解本次利用docker (windows版本)在PC机上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
+<meta property="og:description" content="本次利用docker (windows版本)在PC机上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-29T12:46:56.148Z">
+<meta property="og:updated_time" content="2018-11-29T13:45:28.573Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Eacong&#39;s blog">
-<meta name="twitter:description" content="Windows下用docker搭建Hadoop集群详解本次利用docker (windows版本)在PC机上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
+<meta name="twitter:title" content="Windows下用docker搭建Hadoop集群详解">
+<meta name="twitter:description" content="本次利用docker (windows版本)在PC机上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
   
     <link rel="alternative" href="/atom.xml" title="Eacong&#39;s blog" type="application/atom+xml">
   
@@ -157,12 +158,26 @@
             <article id="post-Windows下用docker搭建Hadoop集群详解" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Windows下用docker搭建Hadoop集群详解
+    </h1>
+  
+
+        
+        <a href="/2018/11/29/Windows下用docker搭建Hadoop集群详解/" class="archive-article-date">
+  	<time datetime="2018-11-29T08:07:33.045Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-29</time>
+</a>
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h1 id="Windows下用docker搭建Hadoop集群详解"><a href="#Windows下用docker搭建Hadoop集群详解" class="headerlink" title="Windows下用docker搭建Hadoop集群详解"></a>Windows下用docker搭建Hadoop集群详解</h1><p>本次利用docker (windows版本)在PC机上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。</p>
+<p>本次利用docker (windows版本)在PC机上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。</p>
 <a id="more"></a>
-<hr>
 <h2 id="过程快速浏览"><a href="#过程快速浏览" class="headerlink" title="过程快速浏览"></a>过程快速浏览</h2><p>思路：</p>
 <ul>
 <li>1，    准备环境；  </li>
@@ -259,7 +274,8 @@
 <ul>
 <li>13 Question：  </li>
 </ul>
-<p>此时在宿主机的浏览器中访问master却无法打开网页，网上查找资料有很多结果，方法都试了但是还是无法访问，目前这个问题正在解决中，待更新。。。</p>
+<p>此时在宿主机的浏览器中访问master却无法打开网页，网上查找资料有很多结果，方法都试了但是还是无法访问，目前这个问题正在解决中，<br>IP地址的问题<br>服务自动启动的问题</p>
+<p>待更新。。。</p>
 
       
 
@@ -289,6 +305,25 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ubutnu</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -479,6 +514,38 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">HDFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Hadoop ubutnu docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Hadoop,ubutnu,docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubutnu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tag1</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tag2</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
