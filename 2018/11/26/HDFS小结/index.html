@@ -6,20 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://eacong.github.io">
-  <title>Eacong&#39;s blog</title>
+  <title>HDFS小结 | Eacong&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="HDFS小结看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。">
+  <meta name="description" content="看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。">
+<meta name="keywords" content="HDFS,Hadoop">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Eacong&#39;s blog">
+<meta property="og:title" content="HDFS小结">
 <meta property="og:url" content="https://eacong.github.io/2018/11/26/HDFS小结/index.html">
 <meta property="og:site_name" content="Eacong&#39;s blog">
-<meta property="og:description" content="HDFS小结看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。">
+<meta property="og:description" content="看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://eacong.github.io/images/hadoop_components.png">
-<meta property="og:updated_time" content="2018-11-28T08:18:34.018Z">
+<meta property="og:updated_time" content="2018-11-29T14:52:22.987Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Eacong&#39;s blog">
-<meta name="twitter:description" content="HDFS小结看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。">
+<meta name="twitter:title" content="HDFS小结">
+<meta name="twitter:description" content="看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。">
 <meta name="twitter:image" content="https://eacong.github.io/images/hadoop_components.png">
   
     <link rel="alternative" href="/atom.xml" title="Eacong&#39;s blog" type="application/atom+xml">
@@ -85,11 +86,11 @@
 				
 					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
 		        
-					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
-		        
-					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
-		        
 					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+					<a class="qq" target="_blank" href="#" title="qq"><i class="icon-qq"></i></a>
+		        
+					<a class="weixin" target="_blank" href="#" title="weixin"><i class="icon-weixin"></i></a>
 		        
 			</div>
 		</nav>
@@ -126,11 +127,11 @@
 					
 						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
 			        
-						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
-			        
-						<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
-			        
 						<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+						<a class="qq" target="_blank" href="#" title="qq"><i class="icon-qq"></i></a>
+			        
+						<a class="weixin" target="_blank" href="#" title="weixin"><i class="icon-weixin"></i></a>
 			        
 				</div>
 			</nav>
@@ -159,23 +160,29 @@
             <article id="post-HDFS小结" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      HDFS小结
+    </h1>
+  
+
+        
+        <a href="/2018/11/26/HDFS小结/" class="archive-article-date">
+  	<time datetime="2018-11-26T11:34:50.025Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-26</time>
+</a>
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h2 id="HDFS小结"><a href="#HDFS小结" class="headerlink" title="HDFS小结"></a>HDFS小结</h2><p>看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。</p>
+        <p>看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。</p>
 <a id="more"></a>
-<h2 id="1-Hadoop简介"><a href="#1-Hadoop简介" class="headerlink" title="1.Hadoop简介"></a>1.Hadoop简介</h2><p>Hadoop 是一个基于 Java 的分布式密集数据处理和数据分析的软件框架。其两个核心组件分别是HDFS（Hadoop Distributed File System）与MapReduce。<br>Hadoop基本组件如图1。<br><img src="/images/hadoop_components.png" alt="Hadoop基本组件"><br>更多信息请移步 <a href="http://hadoop.apache.org/" target="_blank" rel="noopener">Hadoop官方资料</a>。</p>
-<h3 id="1-1-HDFS概念"><a href="#1-1-HDFS概念" class="headerlink" title="1.1.HDFS概念"></a>1.1.HDFS概念</h3><p>HDFS是一种开源的分布式文件系统。它其实是受到Google公司的GFS（Google File System）的启发而实现的。它解决了Hadoop集群中文件存储的问题，是构成Hadoop集群的核心技术之一。</p>
-<h3 id="1-2-MapReduce概念"><a href="#1-2-MapReduce概念" class="headerlink" title="1.2.MapReduce概念"></a>1.2.MapReduce概念</h3><p>MapReduce其实最早也是Google提出来的Google MapReduce，</p>
-<h2 id="2-HDFS浅析"><a href="#2-HDFS浅析" class="headerlink" title="2.HDFS浅析"></a>2.HDFS浅析</h2><h3 id="2-1"><a href="#2-1" class="headerlink" title="2.1."></a>2.1.</h3><h3 id="2-2"><a href="#2-2" class="headerlink" title="2.2."></a>2.2.</h3><h2 id="3-MapReduce浅析"><a href="#3-MapReduce浅析" class="headerlink" title="3.MapReduce浅析"></a>3.MapReduce浅析</h2><h3 id="3-1"><a href="#3-1" class="headerlink" title="3.1."></a>3.1.</h3><h3 id="3-2"><a href="#3-2" class="headerlink" title="3.2."></a>3.2.</h3><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+<h1 id="1-Hadoop简介"><a href="#1-Hadoop简介" class="headerlink" title="1.Hadoop简介"></a>1.Hadoop简介</h1><p>Hadoop 是一个基于 Java 的分布式密集数据处理和数据分析的软件框架。其两个核心组件分别是HDFS（Hadoop Distributed File System）与MapReduce。<br>Hadoop基本组件如图1。<br><img src="/images/hadoop_components.png" alt="Hadoop基本组件"><br>更多信息请移步 <a href="http://hadoop.apache.org/" target="_blank" rel="noopener">Hadoop官方资料</a>。</p>
+<h2 id="1-1-HDFS概念"><a href="#1-1-HDFS概念" class="headerlink" title="1.1.HDFS概念"></a>1.1.HDFS概念</h2><p>HDFS是一种开源的分布式文件系统。它其实是受到Google公司的GFS（Google File System）的启发而实现的。它解决了Hadoop集群中文件存储的问题，是构成Hadoop集群的核心技术之一。</p>
+<h2 id="1-2-MapReduce概念"><a href="#1-2-MapReduce概念" class="headerlink" title="1.2.MapReduce概念"></a>1.2.MapReduce概念</h2><p>MapReduce其实最早也是Google提出来的Google MapReduce，</p>
+<h1 id="2-HDFS浅析"><a href="#2-HDFS浅析" class="headerlink" title="2.HDFS浅析"></a>2.HDFS浅析</h1><h2 id="2-1"><a href="#2-1" class="headerlink" title="2.1."></a>2.1.</h2><h2 id="2-2"><a href="#2-2" class="headerlink" title="2.2."></a>2.2.</h2><h1 id="3-MapReduce浅析"><a href="#3-MapReduce浅析" class="headerlink" title="3.MapReduce浅析"></a>3.MapReduce浅析</h1><h2 id="3-1"><a href="#3-1" class="headerlink" title="3.1."></a>3.1.</h2><h2 id="3-2"><a href="#3-2" class="headerlink" title="3.2."></a>3.2.</h2>
       
 
       
@@ -188,9 +195,19 @@
             <span class="tooltip-content">
               <span class="tooltip-text">
                 <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃麻辣烫<i class="icon icon-quo-right"></i></p>
                   <div class="reward-box">
                     
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/Alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/WeChatPay.png">
+                      <span class="reward-type">微信</span>
+                    </div>
                     
                   </div>
                 </span>
@@ -204,6 +221,21 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HDFS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -279,7 +311,7 @@
   
   
     <a href="/2018/11/26/浅谈存储技术的发展与最新技术/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title"></div>
+      <div class="article-nav-title">浅谈存储技术的发展与最新技术</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -435,6 +467,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">tag2</a>
               </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">存储技术</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
@@ -485,27 +521,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         <ul class="search-ul">
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
+              <a href="/www.bmw.com.cn" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>BMW中国</a>
             </li>
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
+              <a href="https://opsx.alibaba.com/mirror" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>阿里巴巴开源镜像站</a>
             </li>
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
+              <a href="https://study.163.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>网易云课堂</a>
             </li>
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
+              <a href="http://www.cnki.net/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>中国知网</a>
             </li>
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
+              <a href="http://www.scu.edu.cn/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>四川大学</a>
             </li>
           
         </ul>
@@ -516,7 +548,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">&lt;br&gt;&lt;br&gt;在读硕士IT狗一只&lt;br&gt;</div>
   	  	
     	</section>
     
