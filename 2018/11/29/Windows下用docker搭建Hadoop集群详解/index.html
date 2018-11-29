@@ -8,19 +8,17 @@
   <link rel="dns-prefetch" href="https://eacong.github.io">
   <title>Eacong&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="HDFS小结看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。">
+  <meta name="description" content="#Windows下用docker搭建Hadoop集群详解  ##过程快速浏览 思路：  1，    准备环境：win10，8GB内存，Intel i5处理器，docker—Windows版：v1.12.0-stable (很老的版本了)，Hadoop：v2.9.2，java：v1.8.0_191；   2，    安装docker准备ubuntu环境；   3，    安装java；   4，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Eacong&#39;s blog">
-<meta property="og:url" content="https://eacong.github.io/2018/11/26/HDFS小结/index.html">
+<meta property="og:url" content="https://eacong.github.io/2018/11/29/Windows下用docker搭建Hadoop集群详解/index.html">
 <meta property="og:site_name" content="Eacong&#39;s blog">
-<meta property="og:description" content="HDFS小结看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。">
+<meta property="og:description" content="#Windows下用docker搭建Hadoop集群详解  ##过程快速浏览 思路：  1，    准备环境：win10，8GB内存，Intel i5处理器，docker—Windows版：v1.12.0-stable (很老的版本了)，Hadoop：v2.9.2，java：v1.8.0_191；   2，    安装docker准备ubuntu环境；   3，    安装java；   4，">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://eacong.github.io/images/hadoop_components.png">
-<meta property="og:updated_time" content="2018-11-28T08:18:34.018Z">
+<meta property="og:updated_time" content="2018-11-29T09:48:18.080Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Eacong&#39;s blog">
-<meta name="twitter:description" content="HDFS小结看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。">
-<meta name="twitter:image" content="https://eacong.github.io/images/hadoop_components.png">
+<meta name="twitter:description" content="#Windows下用docker搭建Hadoop集群详解  ##过程快速浏览 思路：  1，    准备环境：win10，8GB内存，Intel i5处理器，docker—Windows版：v1.12.0-stable (很老的版本了)，Hadoop：v2.9.2，java：v1.8.0_191；   2，    安装docker准备ubuntu环境；   3，    安装java；   4，">
   
     <link rel="alternative" href="/atom.xml" title="Eacong&#39;s blog" type="application/atom+xml">
   
@@ -156,25 +154,41 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-HDFS小结" class="article article-type-post " itemscope="" itemprop="blogPost">
+            <article id="post-Windows下用docker搭建Hadoop集群详解" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h2 id="HDFS小结"><a href="#HDFS小结" class="headerlink" title="HDFS小结"></a>HDFS小结</h2><p>看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。</p>
-<a id="more"></a>
-<h2 id="1-Hadoop简介"><a href="#1-Hadoop简介" class="headerlink" title="1.Hadoop简介"></a>1.Hadoop简介</h2><p>Hadoop 是一个基于 Java 的分布式密集数据处理和数据分析的软件框架。其两个核心组件分别是HDFS（Hadoop Distributed File System）与MapReduce。<br>Hadoop基本组件如图1。<br><img src="/images/hadoop_components.png" alt="Hadoop基本组件"><br>更多信息请移步 <a href="http://hadoop.apache.org/" target="_blank" rel="noopener">Hadoop官方资料</a>。</p>
-<h3 id="1-1-HDFS概念"><a href="#1-1-HDFS概念" class="headerlink" title="1.1.HDFS概念"></a>1.1.HDFS概念</h3><p>HDFS是一种开源的分布式文件系统。它其实是受到Google公司的GFS（Google File System）的启发而实现的。它解决了Hadoop集群中文件存储的问题，是构成Hadoop集群的核心技术之一。</p>
-<h3 id="1-2-MapReduce概念"><a href="#1-2-MapReduce概念" class="headerlink" title="1.2.MapReduce概念"></a>1.2.MapReduce概念</h3><p>MapReduce其实最早也是Google提出来的Google MapReduce，</p>
-<h2 id="2-HDFS浅析"><a href="#2-HDFS浅析" class="headerlink" title="2.HDFS浅析"></a>2.HDFS浅析</h2><h3 id="2-1"><a href="#2-1" class="headerlink" title="2.1."></a>2.1.</h3><h3 id="2-2"><a href="#2-2" class="headerlink" title="2.2."></a>2.2.</h3><h2 id="3-MapReduce浅析"><a href="#3-MapReduce浅析" class="headerlink" title="3.MapReduce浅析"></a>3.MapReduce浅析</h2><h3 id="3-1"><a href="#3-1" class="headerlink" title="3.1."></a>3.1.</h3><h3 id="3-2"><a href="#3-2" class="headerlink" title="3.2."></a>3.2.</h3><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>#Windows下用docker搭建Hadoop集群详解</p>
+<hr>
+<p>##过程快速浏览</p>
+<p>思路：</p>
+<ul>
+<li>1，    准备环境：win10，8GB内存，Intel i5处理器，docker—Windows版：v1.12.0-stable (很老的版本了)，Hadoop：v2.9.2，java：v1.8.0_191；  </li>
+<li>2，    安装docker准备ubuntu环境；  </li>
+<li>3，    安装java；  </li>
+<li>4，    安装Hadoop；  </li>
+<li>5，    配置master；  </li>
+<li>6，    配置slaves；  </li>
+<li>7，    测试和问题总结。</li>
+</ul>
+<p>##详细配置步骤</p>
+<ul>
+<li><p>1 安装docker<br>下载docker for Windows并安装配置好，值得注意的是，安装docker需要开启Microsoft的hper-v，并且开启后诸如VMware和VirtulBox的虚拟机无法使用了。  </p>
+</li>
+<li><p>2 在docker中安装ubuntu<br>在docker中下载ubuntu:14.04镜像  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull ubuntu:14.04</span><br><span class="line">```    </span><br><span class="line">下载好可以用以下命令查看下载的镜像：</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>docker images<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">然后就可以用刚刚下载的镜像启动一个容器：</span><br></pre></td></tr></table></figure></p>
+<p>docker run –it -h [hostname] [image name]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">接下来就是用这个镜像来一步一步搭建Hadoop集群的节点  </span><br><span class="line"></span><br><span class="line">*  3 启动一个ubuntu容器</span><br><span class="line">启动一个ubuntu容器，创建文件夹用于存放jdk和Hadoop文件：</span><br></pre></td></tr></table></figure></p>
+<p>mkdir /root/soft<br>mkdir /root/soft/apache<br>mkdir /root/soft/apache/hadoop<br>mkdir /root/soft/java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">并下载jdk1.8并配置环境变量，这一步之前我已经将jdk下载到windows系统中了，可以用以下命令将本地的文件导入到容器中：</span><br></pre></td></tr></table></figure></p>
+<p>docker cp D:\ jdk-8u191-linux-x64.tar.gz [container id]:/root/soft/java<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">解压文件：</span><br></pre></td></tr></table></figure></p>
+<p>tar –xvzf jkd-8u191-linux-x64.tar.gz<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">* 4 安装Hadoop  </span><br><span class="line">下载Hadoop2.9.2并配置环境变量  </span><br><span class="line">拷贝文件：</span><br></pre></td></tr></table></figure></p>
+<p>docker cp d:\hadoop-2.9.2.tar.gz [containerID]:/root/soft/apache/Hadoop<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">解压文件：</span><br></pre></td></tr></table></figure></p>
+<p>tar –xvzf hadoop-2.9.2.tar.gz<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">配置环境变量：</span><br></pre></td></tr></table></figure></p>
+<p>vi /etc/profile<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">在末尾添加：</span><br><span class="line">```  </span><br><span class="line">export JAVA_HOME=/root/soft/java/jdk1.8.0_191  </span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre   </span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib   </span><br><span class="line">export PATH=$PATH:$&#123;JAVA_HOME&#125;/bin   </span><br><span class="line">export HADOOP_HOME=/root/soft/apache/hadoop/hadoop-2.9.2</span><br><span class="line">export HADOOP_CONFIG_HOME=$HADOOP_HOME/etc/hadoop </span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin </span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/sbin  </span><br><span class="line">```   </span><br><span class="line">使环境变量生效：</span><br></pre></td></tr></table></figure></p>
+<p>source /etc/profile<br><code>`</code>  </p>
 
       
 
@@ -254,7 +268,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://eacong.github.io/2018/11/26/HDFS小结/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://eacong.github.io/2018/11/29/Windows下用docker搭建Hadoop集群详解/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -268,17 +282,8 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/11/29/Windows下用docker搭建Hadoop集群详解/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          (no title)
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/11/26/浅谈存储技术的发展与最新技术/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/11/26/HDFS小结/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>
