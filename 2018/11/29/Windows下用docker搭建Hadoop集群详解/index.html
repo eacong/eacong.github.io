@@ -16,10 +16,13 @@
 <meta property="og:site_name" content="Eacong&#39;s blog">
 <meta property="og:description" content="本次利用docker (windows版本)在PC机上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-29T13:45:28.573Z">
+<meta property="og:image" content="https://eacong.github.io/Windows下用docker搭建Hadoop集群详解/docker_images.PNG">
+<meta property="og:image" content="https://eacong.github.io/Windows下用docker搭建Hadoop集群详解/docker_ps.PNG">
+<meta property="og:updated_time" content="2018-11-30T07:32:36.962Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows下用docker搭建Hadoop集群详解">
 <meta name="twitter:description" content="本次利用docker (windows版本)在PC机上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
+<meta name="twitter:image" content="https://eacong.github.io/Windows下用docker搭建Hadoop集群详解/docker_images.PNG">
   
     <link rel="alternative" href="/atom.xml" title="Eacong&#39;s blog" type="application/atom+xml">
   
@@ -60,8 +63,6 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/随笔/">随笔</a></li>
-	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -86,9 +87,9 @@
 		        
 					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
 		        
-					<a class="qq" target="_blank" href="#" title="qq"><i class="icon-qq"></i></a>
+					<a class="qq" target="_blank" href="/QQ_number：<br>1334861527" title="qq"><i class="icon-qq"></i></a>
 		        
-					<a class="weixin" target="_blank" href="#" title="weixin"><i class="icon-weixin"></i></a>
+					<a class="weixin" target="_blank" href="/WeChat_ID：<br>eacong_yin" title="weixin"><i class="icon-weixin"></i></a>
 		        
 			</div>
 		</nav>
@@ -116,8 +117,6 @@
 			
 				
 			
-				
-			
 			
 			
 			<nav class="header-nav">
@@ -127,9 +126,9 @@
 			        
 						<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
 			        
-						<a class="qq" target="_blank" href="#" title="qq"><i class="icon-qq"></i></a>
+						<a class="qq" target="_blank" href="/QQ_number：<br>1334861527" title="qq"><i class="icon-qq"></i></a>
 			        
-						<a class="weixin" target="_blank" href="#" title="weixin"><i class="icon-weixin"></i></a>
+						<a class="weixin" target="_blank" href="/WeChat_ID：<br>eacong_yin" title="weixin"><i class="icon-weixin"></i></a>
 			        
 				</div>
 			</nav>
@@ -138,9 +137,7 @@
 				<ul style="width: 50%">
 				
 				
-					<li style="width: 50%"><a href="/">主页</a></li>
-		        
-					<li style="width: 50%"><a href="/tags/随笔/">随笔</a></li>
+					<li style="width: 100%"><a href="/">主页</a></li>
 		        
 				</ul>
 			</nav>
@@ -193,30 +190,33 @@
 <li><p>1 安装docker<br>下载docker for Windows并安装好，值得注意的是，安装docker需要开启Microsoft的hper-v，并且开启后诸如VMware和VirtulBox的虚拟机无法使用了。<br>安装好docker后，在cmd或者是powershell中就可以使用docker命令了，例如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker version</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>2 在docker中安装ubuntu<br>在docker中有各种各样的镜像可以使用，我们要搭建Hadoop集群，使用的是ubuntu环境，首先下载ubuntu:14.04镜像  </p>
+<li><p>2 在docker中安装ubuntu<br>在docker中有各种各样的镜像可以使用，我们要搭建Hadoop集群，使用的是ubuntu环境，首先下载ubuntu:14.04镜像。因为用的国外的站点下载，而在windows系统中无法更改国内源，所以这个时候下载速度很慢，耐心等待，我尝试了3次才成功。耐心吧孩纸。  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull ubuntu:14.04</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>下载好可以用以下命令查看下载的镜像：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure></p>
-<p>然后就可以用刚刚下载的镜像启动一个容器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run –it -h [hostname] [image name]</span><br></pre></td></tr></table></figure></p>
-<p>其中“-h”可以指定生成的容器主机名，“image name”就是刚刚下载的ubuntu镜像名字。<br>接下来就是用这个镜像一步一步来制作搭建Hadoop集群节点的基础镜像。  </p>
+<p>下载好可以用以下命令查看下载的镜像：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+<p>示例：<br><img src="/Windows下用docker搭建Hadoop集群详解/docker_images.PNG" alt="docker_images">  </p>
+<p>然后就可以用刚刚下载的镜像启动一个容器：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用法：      </span><br><span class="line">docker run –it -h [hostname] [image name]      </span><br><span class="line">示例：  </span><br><span class="line">docker run -it -h master ubuntu:14.04</span><br></pre></td></tr></table></figure>
+<p>其中“-h”可以指定生成的容器主机名，“image name”就是刚刚下载的ubuntu镜像名字。需要注意的是，在容器中启动的ubuntu默认以“root”用户登录。<br>接下来就是用这个镜像一步一步来制作搭建Hadoop集群节点的基础镜像。  </p>
 <ul>
 <li><p>3 启动一个ubuntu容器<br>启动一个ubuntu容器，创建文件夹用于存放jdk和Hadoop文件：  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir /root/soft  </span><br><span class="line">mkdir /root/soft/apache  </span><br><span class="line">mkdir /root/soft/apache/hadoop  </span><br><span class="line">mkdir /root/soft/java</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>4 安装java<br>下载jdk1.8并解压<br>由于之前我已经将jdk下载到windows系统D盘根目录中了，可以用以下命令将本地的文件导入到容器中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp D:\ jdk-8u191-linux-x64.tar.gz [container id]:/root/soft/java</span><br></pre></td></tr></table></figure>
+<li><p>4 安装java<br>下载jdk1.8，由于之前我已经将jdk（文件名：jdk-8u191-linux-x64.tar.gz）下载到windows系统D盘根目录中了，可以用以下命令将本地的文件导入到容器中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用法：</span><br><span class="line">docker cp [path][file name] [container id]:[path]  </span><br><span class="line">示例：</span><br><span class="line">docker cp D:\jdk-8u191-linux-x64.tar.gz 3f9151499ce2:/root/soft/java</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>解压文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar –xvzf jkd-8u191-linux-x64.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>解压文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $JAVA_HOME</span><br><span class="line">tar –xvzf jkd-8u191-linux-x64.tar.gz</span><br></pre></td></tr></table></figure></p>
 <p>配置环境变量:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure></p>
 <p>在末尾添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/root/soft/java/jdk1.8.0_191</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre </span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib </span><br><span class="line">export PATH=$PATH:$&#123;JAVA_HOME&#125;/bin</span><br></pre></td></tr></table></figure></p>
 <p>使环境变量生效：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>5 安装Hadoop<br>下载Hadoop2.9.2并安装。拷贝文件：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp d:\hadoop-2.9.2.tar.gz [containerID]:/root/soft/apache/Hadoop</span><br></pre></td></tr></table></figure>
+<li>5 安装Hadoop<br>之前我也下载了Hadoop2.9.2在windows系统中，接下来安装到容器的ubuntu中。<br>拷贝文件：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp d:\hadoop-2.9.2.tar.gz [containerID]:/root/soft/apache/Hadoop</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>解压文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar –xvzf hadoop-2.9.2.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>解压文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HADOOP_HOME</span><br><span class="line">tar –xvzf hadoop-2.9.2.tar.gz</span><br></pre></td></tr></table></figure></p>
 <p>配置环境变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure></p>
 <p>在末尾添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_HOME=/root/soft/apache/hadoop/hadoop-2.9.2  </span><br><span class="line">export HADOOP_CONFIG_HOME=$HADOOP_HOME/etc/hadoop  </span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin  </span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure></p>
 <p>使环境变量生效：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure></p>
@@ -224,33 +224,35 @@
 <li>6 配置Hadoop<br>6.1 创建目录<br>创建tmp (Hadoop临时目录)、namenode (NameNode存放目录)、datanode (DataNode存放目录)目录：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd $HADOOP_HOME</span><br><span class="line">mkdir tmp</span><br><span class="line">mkdir namenode</span><br><span class="line">mkdir datanode</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>6.2 配置文件<br>6.2.1配置core-sete.xml文件<br>在最后两行configuration之间插入信息成如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;/root/soft/apache/hadoop/hadoop-2.9.2/tmp&lt;/value&gt;</span><br><span class="line">            &lt;description&gt;A base for other temporary directories.&lt;/description&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">    &lt;property&gt;</span><br><span class="line">            &lt;name&gt;fs.default.name&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;hdfs://master:9000&lt;/value&gt;</span><br><span class="line">            &lt;final&gt;true&lt;/final&gt;</span><br><span class="line">            &lt;description&gt;The name of the default file system.  A URI whose</span><br><span class="line">            scheme and authority determine the FileSystem implementation.  The</span><br><span class="line">            uri&apos;s scheme determines the config property (fs.SCHEME.impl) naming</span><br><span class="line">            the FileSystem implementation class.  The uri&apos;s authority is used to</span><br><span class="line">            determine the host, port, etc. for a filesystem.&lt;/description&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure></p>
+<p>6.2 配置文件<br>更改几个配置文件的参数使集群搭建能成功，先打开配置文件所在的目录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /root/soft/apache/hadoop/hadoop-2.9.2/etc/hadoop/</span><br></pre></td></tr></table></figure></p>
+<p>6.2.1配置core-sete.xml文件<br>在最后两行configuration之间插入信息成如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">            &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;/root/soft/apache/hadoop/hadoop-2.9.2/tmp&lt;/value&gt;</span><br><span class="line">            &lt;description&gt;A base for other temporary directories.&lt;/description&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">            &lt;name&gt;fs.default.name&lt;/name&gt;</span><br><span class="line">            &lt;value&gt;hdfs://master:9000&lt;/value&gt;</span><br><span class="line">            &lt;final&gt;true&lt;/final&gt;</span><br><span class="line">            &lt;description&gt;The name of the default file system.  A URI whose</span><br><span class="line">            scheme and authority determine the FileSystem implementation.  The</span><br><span class="line">            uri&apos;s scheme determines the config property (fs.SCHEME.impl) naming</span><br><span class="line">            the FileSystem implementation class.  The uri&apos;s authority is used to</span><br><span class="line">            determine the host, port, etc. for a filesystem.&lt;/description&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure></p>
 <p>6.2.2配置mapred-site.xml<br>在最后两行configuration之间插入信息成如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;2&lt;/value&gt;</span><br><span class="line">		&lt;final&gt;true&lt;/final&gt;</span><br><span class="line">		&lt;description&gt;Default block replication.</span><br><span class="line">		The actual number of replications can be specified when the file is created.</span><br><span class="line">		The default is used if replication is not specified in create time.</span><br><span class="line">		&lt;/description&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;/root/soft/apache/hadoop/hadoop-2.9.2/namenode&lt;/value&gt;</span><br><span class="line">		&lt;final&gt;true&lt;/final&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;/root/soft/apache/hadoop/hadoop-2.9.2/datanode&lt;/value&gt;</span><br><span class="line">		&lt;final&gt;true&lt;/final&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure></p>
 <p>6.2.3 配置mapred-site.xml<br>由于这里没有mapred-site.xml，使用cp mapred-site.xml.template mapred-site.xml创建一个，然后配置mapred-site.xml，在最后两行configuration之间插入信息成如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapred.job.tracker&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;master:9001&lt;/value&gt;</span><br><span class="line">        &lt;description&gt;The host and port that the MapReduce job tracker runs</span><br><span class="line">        at.  If &quot;local&quot;, then jobs are run in-process as a single map</span><br><span class="line">        and reduce task.</span><br><span class="line">        &lt;/description&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure></p>
-<p>6.2.4配置JAVA_HOME环境变量<br>修改hadoop-env.sh文件，在The java implementation to use之后添加如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">export JAVA_HOME=/root/soft/java/jdk1.8.0_191</span><br></pre></td></tr></table></figure></p>
+<p>6.2.4配置JAVA_HOME环境变量<br>修改hadoop-env.sh文件，在#The java implementation to use之后添加如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#The java implementation to use  </span><br><span class="line">export JAVA_HOME=/root/soft/java/jdk1.8.0_191</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li><p>7 格式化NameNode：很重要！！！  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop namenode –format</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>8 安装ssh：  </p>
+<li><p>8 安装ssh：<br>8.1 安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install ssh</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install ssh</span><br></pre></td></tr></table></figure>
-<p>自动启动ssh：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /etc/init.d/ssh /etc/rc3.d/S100ssh</span><br></pre></td></tr></table></figure></p>
+<p>8.2 设置自动启动ssh：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /etc/init.d/ssh /etc/rc3.d/S100ssh</span><br></pre></td></tr></table></figure></p>
 <p>或者编辑/etc/profile：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure></p>
 <p>添加如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#autorun</span><br><span class="line">/usr/sbin/sshd</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>9 生成访问密钥：<br>创建公秘钥：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<li>9 生成访问密钥：<br>9.1 创建公秘钥：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa  </span><br><span class="line">ssh-keygen -t dsa</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>创建公秘钥：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t dsa</span><br></pre></td></tr></table></figure></p>
-<p>实现无密码登陆：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.ssh</span><br><span class="line">cat id_rsa.pub &gt;&gt; authorized_keys</span><br><span class="line">cat id_dsa.pub &gt;&gt; authorized_keys</span><br></pre></td></tr></table></figure></p>
+<p>9.2 实现无密码登陆：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.ssh</span><br><span class="line">cat id_rsa.pub &gt;&gt; authorized_keys</span><br><span class="line">cat id_dsa.pub &gt;&gt; authorized_keys</span><br></pre></td></tr></table></figure></p>
 <p>启动ssh服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh start</span><br></pre></td></tr></table></figure></p>
-<p>测试ssh：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh localhost</span><br></pre></td></tr></table></figure></p>
+<p>9.3 测试ssh：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh localhost</span><br></pre></td></tr></table></figure></p>
+<p>这个时候应该可以用ssh的方式登录到本机。</p>
 <ul>
 <li>10 打包容器成一个镜像：  </li>
 </ul>
 <p>查看容器ID：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure></p>
+<p>示例：<br><img src="/Windows下用docker搭建Hadoop集群详解/docker_ps.PNG" alt="docker_ps"></p>
 <p>找到刚刚我们配置的容器的ID，再用这个ID作标识打包容器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit –t “hadoop_install” [containerID] ubuntu:hadoop</span><br></pre></td></tr></table></figure></p>
 <p>查看是否生成了镜像：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure></p>
 <ul>
@@ -272,9 +274,9 @@
 <p>测试Hadoop下的程序：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -mkdir /user</span><br><span class="line">hdfs dfs -mkdir /user/root </span><br><span class="line">hdfs dfs -put etc/hadoop input hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.0.jar grep input output &apos;dfs[a-z.]+&apos;</span><br></pre></td></tr></table></figure></p>
 <p>在master节点上查看DataNode是否正常启动：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfsadmin -report</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>13 Question：  </li>
+<li>13 Questions：  </li>
 </ul>
-<p>此时在宿主机的浏览器中访问master却无法打开网页，网上查找资料有很多结果，方法都试了但是还是无法访问，目前这个问题正在解决中，<br>IP地址的问题<br>服务自动启动的问题</p>
+<p>1.此时在宿主机的浏览器中访问master却无法打开网页，网上查找资料有很多结果，方法都试了但是还是无法访问，目前这个问题正在解决中；<br>2.IP地址的问题，目前无法保证所有节点都能顺利与外网进行通信；<br>3.服务自动启动的问题，容器不比虚拟机，像ssh这样的服务需要每次手动启动。  </p>
 <p>待更新。。。</p>
 
       
@@ -397,6 +399,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/11/29/deamon/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          deamon
+        
+      </div>
+    </a>
   
   
     <a href="/2018/11/26/HDFS小结/" id="article-nav-older" class="article-nav-link-wrap">
@@ -637,7 +648,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">&lt;br&gt;&lt;br&gt;在读硕士IT狗一只&lt;br&gt;</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">&lt;br&gt;&lt;br&gt;在读硕士IT狗一只&lt;br&gt;请多指教</div>
   	  	
     	</section>
     
