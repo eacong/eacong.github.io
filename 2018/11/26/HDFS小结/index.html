@@ -17,7 +17,7 @@
 <meta property="og:description" content="看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://eacong.github.io/HDFS小结/hadoop_components.png">
-<meta property="og:updated_time" content="2018-11-30T06:00:46.739Z">
+<meta property="og:updated_time" content="2018-12-01T16:41:54.433Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDFS小结">
 <meta name="twitter:description" content="看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。">
@@ -173,10 +173,49 @@
       
         <p>看了也有一些论文了吧，还是有些感受的。就从Hadoop的概念入手，首先简单介绍一下两大核心组件，然后再深入一点介绍具体的两大组件的功能，最后讨论一下它们之中存在着的优势和不足之处。</p>
 <a id="more"></a>
-<h1 id="1-Hadoop简介"><a href="#1-Hadoop简介" class="headerlink" title="1.Hadoop简介"></a>1.Hadoop简介</h1><p>Hadoop 是一个基于 Java 的分布式密集数据处理和数据分析的软件框架。其两个核心组件分别是HDFS（Hadoop Distributed File System）与MapReduce。<br>Hadoop基本组件如图1。<br><img src="/HDFS小结/hadoop_components.png" alt="Hadoop基本组件"><br>更多信息请移步 <a href="http://hadoop.apache.org/" target="_blank" rel="noopener">Hadoop官方资料</a>。</p>
+<h1 id="1-Hadoop简介"><a href="#1-Hadoop简介" class="headerlink" title="1.Hadoop简介"></a>1.Hadoop简介</h1><p>Hadoop 是一个基于 Java 的分布式密集数据处理和数据分析的软件框架。其两个核心组件分别是HDFS（Hadoop Distributed File System）与MapReduce。<br>Hadoop基本组件如图1。<br><img src="/HDFS小结/hadoop_components.png" alt="Hadoop基本组件"><br>图1 Hadoop基本组件<br>更多信息请移步 <a href="http://hadoop.apache.org/" target="_blank" rel="noopener">Hadoop官方资料</a>。</p>
 <h2 id="1-1-HDFS概念"><a href="#1-1-HDFS概念" class="headerlink" title="1.1.HDFS概念"></a>1.1.HDFS概念</h2><p>HDFS是一种开源的分布式文件系统。它其实是受到Google公司的GFS（Google File System）的启发而实现的。它解决了Hadoop集群中文件存储的问题，是构成Hadoop集群的核心技术之一。</p>
-<h2 id="1-2-MapReduce概念"><a href="#1-2-MapReduce概念" class="headerlink" title="1.2.MapReduce概念"></a>1.2.MapReduce概念</h2><p>MapReduce其实最早也是Google提出来的Google MapReduce，</p>
-<h1 id="2-HDFS浅析"><a href="#2-HDFS浅析" class="headerlink" title="2.HDFS浅析"></a>2.HDFS浅析</h1><h2 id="2-1"><a href="#2-1" class="headerlink" title="2.1."></a>2.1.</h2><h2 id="2-2"><a href="#2-2" class="headerlink" title="2.2."></a>2.2.</h2><h1 id="3-MapReduce浅析"><a href="#3-MapReduce浅析" class="headerlink" title="3.MapReduce浅析"></a>3.MapReduce浅析</h1><h2 id="3-1"><a href="#3-1" class="headerlink" title="3.1."></a>3.1.</h2><h2 id="3-2"><a href="#3-2" class="headerlink" title="3.2."></a>3.2.</h2>
+<h2 id="1-2-MapReduce概念"><a href="#1-2-MapReduce概念" class="headerlink" title="1.2.MapReduce概念"></a>1.2.MapReduce概念</h2><p>MapReduce其实最早也是Google提出来的Google MapReduce，旨在用多个分布式的节点来处理突发的数据来达到高可靠、高可用等高性能。</p>
+<h1 id="2-HDFS浅析"><a href="#2-HDFS浅析" class="headerlink" title="2.HDFS浅析"></a>2.HDFS浅析</h1><p>hdfs是一种Master/slave模式，其中master节点又称为NameNode，slave节点又称为DataNode，这两种节点的作用如下：    </p>
+<ul>
+<li>NameNode：非常重要，关系着整个分布式文件系统的安全，它管理整个系统的运作，协调各个节点。  </li>
+<li>DataNode：用于存储在hdfs分布式存储系统中的data。  </li>
+</ul>
+<h2 id="2-1-HDFS组成部分及其作用"><a href="#2-1-HDFS组成部分及其作用" class="headerlink" title="2.1.HDFS组成部分及其作用"></a>2.1.HDFS组成部分及其作用</h2><h3 id="clients："><a href="#clients：" class="headerlink" title="clients："></a>clients：</h3><p>client充当享受集群服务的角色。其作用在于：  </p>
+<ul>
+<li>1.文件分块（默认64MB，很多情况是128MB）；</li>
+<li>2.想NameNode发出请求；</li>
+<li>3.将文件分块组成的package以流的方式写入DataNode；</li>
+<li>4.告知NameNode已经发送完毕。<h3 id="Namenode："><a href="#Namenode：" class="headerlink" title="Namenode："></a>Namenode：</h3>NameNode作用在于：  </li>
+<li>1.收到Client发的请求返回available信息；</li>
+<li>2.在NameNode接收完数据后同时向Client和DataNode发送信息。<h3 id="Datanode："><a href="#Datanode：" class="headerlink" title="Datanode："></a>Datanode：</h3>DataNode作用在于：  </li>
+<li>1.接收Client发送的package；</li>
+<li>2.向Client和NameNode返回结束信息。  </li>
+</ul>
+<h2 id="2-2-HDFS性能测试"><a href="#2-2-HDFS性能测试" class="headerlink" title="2.2.HDFS性能测试"></a>2.2.HDFS性能测试</h2><p>根据王凌晖等人[]在MATLAB上模拟分析Hadoop性能的实验得知：  </p>
+<ul>
+<li>1.随着 Client数量的增多，响应时间逐渐增大。因为这是随着 Client的增大，任务量逐渐增大，需要处理的文件变多。同时也说明，随着任务的增多，HDFS的存储能力也在下降。    </li>
+<li>2.DataNode 节点对响应时间的影响并不是很大，因为在存储数据时，只需要随机地选择 3 个 DataNodes（默认情况下），即使 DataNode 数量很多，也并不能影响读写数据的速度。  </li>
+<li>3.随着 Client_send_package 速率的提高，响应时间在减少，但是当速率提高到一定程度时，响应时间基本不再变化。这是因为虽然 Client 发送数据包的速度提高了，但其他组件的速度并没有变化，当数据包到达其他组件时，处理速度没有跟上，拉低了整个系统的响应时间。但是在一定程度下，可以通过提高Client 发送数据包的速度来降低响应时间，比如提高带宽，或者提高 DataNode组件 I/O 能力等。  </li>
+</ul>
+<h1 id="3-MapReduce浅析"><a href="#3-MapReduce浅析" class="headerlink" title="3.MapReduce浅析"></a>3.MapReduce浅析</h1><h2 id="3-1-MapReduce函数"><a href="#3-1-MapReduce函数" class="headerlink" title="3.1.MapReduce函数"></a>3.1.MapReduce函数</h2><p>MapReduce函数有如下3个：</p>
+<ul>
+<li>1.map函数</li>
+<li>2.reduce函数；</li>
+<li>3.main函数</li>
+</ul>
+<h2 id="3-2-Hadoop-MapReduce引擎"><a href="#3-2-Hadoop-MapReduce引擎" class="headerlink" title="3.2.Hadoop MapReduce引擎"></a>3.2.Hadoop MapReduce引擎</h2><p>Hadoop MapReduce有两个引擎：    </p>
+<ul>
+<li>1.JobTracker : 负责管理调度所有作业，它是整个系统分配任务的核心。  </li>
+<li>2.TaskTracker:具体负责执行用户定义的操作，每个任务被分割为任务集，包含Map任务和Reduce任务。  </li>
+</ul>
+<h1 id="4-Hadoop性能"><a href="#4-Hadoop性能" class="headerlink" title="4.Hadoop性能"></a>4.Hadoop性能</h1><p>影响Hadoop集群性能主要因素–文件分块大小。主要影响以下3个方面：    </p>
+<ul>
+<li>2．上传方案</li>
+<li>3．内存占用</li>
+<li>4．读取速度</li>
+</ul>
+
       
 
       
