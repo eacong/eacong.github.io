@@ -18,7 +18,9 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://eacong.github.io/Windows下用docker搭建Hadoop集群详解/docker_images.PNG">
 <meta property="og:image" content="https://eacong.github.io/Windows下用docker搭建Hadoop集群详解/docker_ps.PNG">
-<meta property="og:updated_time" content="2018-12-01T07:13:37.269Z">
+<meta property="og:image" content="https://eacong.github.io/Windows下用docker搭建Hadoop集群详解/hdfs_dfs_ls.PNG">
+<meta property="og:image" content="https://eacong.github.io/Windows下用docker搭建Hadoop集群详解/hdfs_dfs_df.PNG">
+<meta property="og:updated_time" content="2018-12-01T08:31:20.960Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows下用docker搭建Hadoop集群详解">
 <meta name="twitter:description" content="利用docker (windows版本)在PC机上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
@@ -245,6 +247,16 @@
 <li>是依次启动NameNode和其它DataNode节点来保证我们的集群网络拓扑跟设计的一样；  </li>
 <li>设置docker的独立网络，在每次启动一个容器的时候手动指定该容器的IP地址；<br>设置docker独立网络：<br><code>docker network create --subnet=10.10.10.0/24 HADOOP</code><br>其中HADOOP为创建网络的名字。<br>启动容器时设置IP地址：<br><code>docker run -itd -h=master  --network=HADOOP --ip=10.10.10.2 ubuntu:hadoop</code><br>其中HADOOP为指定的网络，10.10.10.2为指定的IP地址。<br>3.服务自动启动的问题，容器不比虚拟机，ssh服务需要每次手动启动；<br>4.容器固有问题，每次新建的容器都是我保存镜像时原始的样子，所以都需要改写/etc/hosts文件以包括所有集群节点。  </li>
 </ul>
+<hr>
+<p>更新2018-12-01<br>针对问题1，网络上的资料显示，网页无法访问可能是因为防火墙的问题，关了防火墙就OK了，但是容器中的ubuntu根本就没有防火墙iptables，所以网页访问这个问题很棘手。但是另一个需要注意的就是：虽然网页无法访问，但是不影响我们使用这个搭建的hdfs集群，在master上可以通过命令行的方式管理hdfs集群，比如：  </p>
+<ul>
+<li>查看文件系统根目录：  </li>
+</ul>
+<p><code>hdfs dfs ls /</code><br>结果如下：<br><img src="/Windows下用docker搭建Hadoop集群详解/hdfs_dfs_ls.PNG" alt="pic">   </p>
+<ul>
+<li>查看存储系统使用状况：  </li>
+</ul>
+<p><code>hdfs dfs df</code><br>结果如下：<br><img src="/Windows下用docker搭建Hadoop集群详解/hdfs_dfs_df.PNG" alt="pic">  </p>
 <p>待更新。。。</p>
 
       
