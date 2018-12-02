@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://eacong.github.io/Windows下用docker搭建Hadoop集群详解/docker_ps.PNG">
 <meta property="og:image" content="https://eacong.github.io/Windows下用docker搭建Hadoop集群详解/hdfs_dfs_ls.PNG">
 <meta property="og:image" content="https://eacong.github.io/Windows下用docker搭建Hadoop集群详解/hdfs_dfs_df.PNG">
-<meta property="og:updated_time" content="2018-12-01T08:31:20.960Z">
+<meta property="og:updated_time" content="2018-12-02T07:17:54.359Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows下用docker搭建Hadoop集群详解">
 <meta name="twitter:description" content="利用docker (windows版本)在PC机上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
@@ -227,7 +227,7 @@
 <p>这个时候应该可以用ssh的方式登录到本机。</p>
 <h3 id="10-打包容器成一个镜像："><a href="#10-打包容器成一个镜像：" class="headerlink" title="10 打包容器成一个镜像："></a>10 打包容器成一个镜像：</h3><p>查看容器ID：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure></p>
 <p>示例：<br><img src="/Windows下用docker搭建Hadoop集群详解/docker_ps.PNG" alt="docker_ps"></p>
-<p>找到刚刚我们配置的容器的ID，再用这个ID作标识打包容器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit –t “hadoop_install” [containerID] ubuntu:hadoop</span><br></pre></td></tr></table></figure></p>
+<p>找到刚刚我们配置的容器的ID，再用这个ID作标识打包容器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit –m “hadoop_install” [containerID] ubuntu:hadoop</span><br></pre></td></tr></table></figure></p>
 <p>查看是否生成了镜像：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure></p>
 <h3 id="11-开始用这个镜像搭建Hadoop集群："><a href="#11-开始用这个镜像搭建Hadoop集群：" class="headerlink" title="11 开始用这个镜像搭建Hadoop集群："></a>11 开始用这个镜像搭建Hadoop集群：</h3><h4 id="11-1创建3个容器"><a href="#11-1创建3个容器" class="headerlink" title="11.1创建3个容器"></a>11.1创建3个容器</h4><p>创建3个容器，分别为master、slave1、slave2：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -h=master ubuntu:hadoop</span><br><span class="line">docker run -it -h=slave1 ubuntu:hadoop</span><br><span class="line">docker run -it -h=slave2 ubuntu:hadoop</span><br></pre></td></tr></table></figure></p>
 <h4 id="11-2编辑hosts文件"><a href="#11-2编辑hosts文件" class="headerlink" title="11.2编辑hosts文件"></a>11.2编辑hosts文件</h4><p>编辑3个节点的hosts文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/hosts</span><br></pre></td></tr></table></figure></p>
