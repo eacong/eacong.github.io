@@ -19,7 +19,8 @@
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/master_jps.png">
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/slave1_jps.png">
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/slave2_jps.png">
-<meta property="og:updated_time" content="2018-12-05T09:59:02.853Z">
+<meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/nodes.png">
+<meta property="og:updated_time" content="2018-12-05T10:01:59.336Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实战用ubuntu搭建Hadoop集群">
 <meta name="twitter:description" content="利用ubuntu在PC机 (虚拟机)上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
@@ -230,8 +231,9 @@
 <h3 id="10-启动Hadoop"><a href="#10-启动Hadoop" class="headerlink" title="10 启动Hadoop"></a>10 启动Hadoop</h3><p>此时整个集群环境就搭建好了，我们来启动Hadoop，在master上面启动：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master: ~/hadoop/hadoop-2.9.2/etc/hadoop# start-all.sh</span><br></pre></td></tr></table></figure></p>
 <p>可以在slave上面输入如下命令看到服务起来没有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps</span><br></pre></td></tr></table></figure></p>
 <p>这个时候应该能在master上看到如下4个进程：<br><img src="/实战用ubuntu搭建Hadoop集群/master_jps.png" alt="1"><br>应该能在slave1上看到如下3个进程：<br><img src="/实战用ubuntu搭建Hadoop集群/slave1_jps.png" alt="2"><br>应该能在slave2上看到如下3个进程：<br><img src="/实战用ubuntu搭建Hadoop集群/slave2_jps.png" alt="3"><br>测试Hadoop下的程序：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -mkdir /user</span><br><span class="line">hdfs dfs -mkdir /user/root</span><br></pre></td></tr></table></figure></p>
-<p>在master节点上查看DataNode是否正常启动：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfsadmin -report  </span><br><span class="line">```  </span><br><span class="line">这个时候应该能看到报告内容中包含了集群中各节点的信息，类似如下：  </span><br><span class="line">![4](/实战用ubuntu搭建Hadoop集群/nodes.png)  </span><br><span class="line">还可以在宿主机的浏览器上访问master的web页面，在浏览器地址栏输入：</span><br></pre></td></tr></table></figure></p>
-<p>192.168.5.123:50070<br><code>`</code><br>在web页面可以更方便管理Hadoop集群的节点。  </p>
+<p>在master节点上查看DataNode是否正常启动：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfsadmin -report</span><br></pre></td></tr></table></figure></p>
+<p>这个时候应该能看到报告内容中包含了集群中各节点的信息，类似如下：<br><img src="/实战用ubuntu搭建Hadoop集群/nodes.png" alt="4"><br>还可以在宿主机的浏览器上访问master的web页面，在浏览器地址栏输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.5.123:50070</span><br></pre></td></tr></table></figure></p>
+<p>在web页面可以更方便管理Hadoop集群的节点。  </p>
 <p>到这里的话，一个包括3个节点的Hadoop集群就搭建起来了，而我们只用了一台普通的PC机，成本相当低了，另外，我们可以用本文用的方法轻松将3个节点扩展到更多节点。当然，这个集群的性能肯定比用高性能服务器搭建的集群要低很多了，所以，这个方法仅仅用于学习交流。  </p>
 <h3 id="11-Questions："><a href="#11-Questions：" class="headerlink" title="11 Questions："></a>11 Questions：</h3><p>1.安装Java和Hadoop的时候，我用ftp的方式复制文件，但是后来发现有编码的问题，具体表现是解压的时候老是报错，经查是ftp传输的时候编码可能与ubuntu有冲突，后来通过U盘复制到ubuntu的，解压正常；  </p>
 
