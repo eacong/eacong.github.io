@@ -20,7 +20,9 @@
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/slave1_jps.png">
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/slave2_jps.png">
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/nodes.png">
-<meta property="og:updated_time" content="2018-12-12T06:57:43.116Z">
+<meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/web.png">
+<meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/browser.png">
+<meta property="og:updated_time" content="2018-12-12T07:25:22.781Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实战用ubuntu搭建Hadoop集群">
 <meta name="twitter:description" content="利用ubuntu在PC机 (虚拟机)上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
@@ -237,8 +239,7 @@
 <p>这个时候应该能在master上看到如下4个进程：<br><img src="/实战用ubuntu搭建Hadoop集群/master_jps.png" alt="1"><br>应该能在slave1上看到如下3个进程：<br><img src="/实战用ubuntu搭建Hadoop集群/slave1_jps.png" alt="2"><br>应该能在slave2上看到如下3个进程：<br><img src="/实战用ubuntu搭建Hadoop集群/slave2_jps.png" alt="3"><br>测试Hadoop下的程序：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -mkdir /user</span><br><span class="line">hdfs dfs -mkdir /user/root</span><br></pre></td></tr></table></figure></p>
 <p>可以用<code>hdfs dfs -ls</code>命令查看刚刚建立的目录。<br>在master节点上查看DataNode是否正常启动，输入以下命令查看HDFS运行状态报告：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfsadmin -report</span><br></pre></td></tr></table></figure></p>
 <p>这个时候应该能看到报告内容中包含了集群中各节点的信息，类似如下：<br><img src="/实战用ubuntu搭建Hadoop集群/nodes.png" alt="4"><br>还可以在宿主机的浏览器上访问master的web页面，在浏览器地址栏输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.5.123:50070</span><br></pre></td></tr></table></figure></p>
-<p>在web页面可以更方便管理Hadoop集群的节点。  </p>
-<p>到这里的话，一个包括3个节点的Hadoop集群就搭建起来了，而我们只用了一台普通的PC机，成本相当低了，另外，我们可以用本文用的方法轻松将3个节点扩展到更多节点。当然，这个集群的性能肯定比用高性能服务器搭建的集群要低很多了，所以，这个方法仅仅用于学习交流。  </p>
+<p>在web页面可以更方便管理Hadoop集群的节点。web首页：<br><img src="/实战用ubuntu搭建Hadoop集群/web.png" alt="5"><br>还可以直接在web页面管理HDFS文件系统中的文件，在首页点击“Utilities”-“browser the file system”：<br><img src="/实战用ubuntu搭建Hadoop集群/browser.png" alt="6"><br>到这里的话，一个包括3个节点的Hadoop集群就搭建起来了，而我们只用了一台普通的PC机，成本相当低了，另外，我们可以用本文用的方法轻松将3个节点扩展到更多节点。当然，这个集群的性能肯定比用高性能服务器搭建的集群要低很多了，所以，这个方法仅仅用于学习交流。  </p>
 <h3 id="11-Questions："><a href="#11-Questions：" class="headerlink" title="11 Questions："></a>11 <span id="jump">Questions</span>：</h3><ul>
 <li>1.安装Java和Hadoop的时候，我用ftp的方式复制文件，但是后来发现有编码的问题，具体表现是解压的时候老是报错，经查是ftp传输的时候编码可能与ubuntu有冲突，后来通过U盘复制到ubuntu的，解压正常。用U盘复制的时候，将U盘连接到虚拟机后要手动挂载，先进<code>/dev</code>查看是否有U盘设备，一般来说是<code>sdb</code>，在用户目录新建目录用于挂载U盘，例如：<code>mkdir /home/eacong/usb</code>，再将U盘挂载到这个目录：<code>mount -t vfat /dev/sdb /home/eacong/usb</code>，这时就可以将U盘文件复制到虚拟机了。  </li>
 <li>2.更改ubuntu主机名有两种方式:<br>一是使用<code>sudo hostname 主机名</code>来临时更改，一旦重启即失效；<br>二是编辑<code>/etc/hostname</code>文件来永久更改主机名，重启依然有效。  </li>
