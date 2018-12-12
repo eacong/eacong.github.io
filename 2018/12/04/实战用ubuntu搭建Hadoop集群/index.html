@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/slave1_jps.png">
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/slave2_jps.png">
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/nodes.png">
-<meta property="og:updated_time" content="2018-12-12T05:59:44.560Z">
+<meta property="og:updated_time" content="2018-12-12T06:28:10.824Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实战用ubuntu搭建Hadoop集群">
 <meta name="twitter:description" content="利用ubuntu在PC机 (虚拟机)上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
@@ -200,13 +200,13 @@
 <p>启动ssh服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh start</span><br></pre></td></tr></table></figure></p>
 <h4 id="3-5-测试ssh："><a href="#3-5-测试ssh：" class="headerlink" title="3.5 测试ssh："></a>3.5 测试ssh：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh localhost</span><br></pre></td></tr></table></figure>
 <p>这个时候应该可以用ssh的方式登录到本机。  </p>
-<h3 id="4-安装java"><a href="#4-安装java" class="headerlink" title="4 安装java"></a>4 安装java</h3><p>下载jdk1.8，由于之前我已经将jdk（文件名：jdk-8u191-linux-x64.tar.gz）下载到windows系统D盘根目录中了，可以用ftp的方式将本地的文件导入到ubuntu中 (如果遇到问题请参照文末问题汇总)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /home/eacong/java</span><br><span class="line">ftp 192.168.5.121</span><br><span class="line">get jdk-8u191-linux-x64.tar.gz</span><br></pre></td></tr></table></figure></p>
+<h3 id="4-安装java"><a href="#4-安装java" class="headerlink" title="4 安装java"></a>4 安装java</h3><p>下载jdk1.8，由于之前我已经将jdk（文件名：jdk-8u191-linux-x64.tar.gz）下载到windows系统D盘根目录中了，可以用ftp的方式将本地的文件导入到ubuntu中 (如果遇到问题请参照文末<a href="#jump">问题汇总</a>)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /home/eacong/java</span><br><span class="line">ftp 192.168.5.121</span><br><span class="line">get jdk-8u191-linux-x64.tar.gz</span><br></pre></td></tr></table></figure></p>
 <p>解压文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /home/eacong/java</span><br><span class="line">tar –xvzf jkd-8u191-linux-x64.tar.gz</span><br></pre></td></tr></table></figure></p>
 <p>配置环境变量:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/profile</span><br></pre></td></tr></table></figure></p>
 <p>在末尾添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/home/eacong/java/jdk1.8.0_191</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre </span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib </span><br><span class="line">export PATH=$PATH:$&#123;JAVA_HOME&#125;/bin</span><br></pre></td></tr></table></figure></p>
 <p>使环境变量生效：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure></p>
 <h3 id="5-安装Hadoop"><a href="#5-安装Hadoop" class="headerlink" title="5 安装Hadoop"></a>5 安装Hadoop</h3><p>之前我也下载了Hadoop2.9.2在windows系统中，接下来同样用ftp的方式拷贝到ubuntu系统中。<br>拷贝文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /home/eacong/apache/hadoop</span><br><span class="line">ftp 192.168.5.121  </span><br><span class="line">get hadoop-2.9.2.tar.gz</span><br></pre></td></tr></table></figure></p>
-<p>解压文件 (如果遇到问题请参照文末问题汇总)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /home/eacong/apache/hadoop</span><br><span class="line">tar –xvzf hadoop-2.9.2.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>解压文件 (如果遇到问题请参照文末<a href="#jump">问题汇总</a>)：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /home/eacong/apache/hadoop</span><br><span class="line">tar –xvzf hadoop-2.9.2.tar.gz</span><br></pre></td></tr></table></figure></p>
 <p>配置环境变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/profile</span><br></pre></td></tr></table></figure></p>
 <p>在末尾添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_HOME=/home/eacong/apache/hadoop/hadoop-2.9.2  </span><br><span class="line">export HADOOP_CONFIG_HOME=$HADOOP_HOME/etc/hadoop  </span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin  </span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure></p>
 <p>使环境变量生效：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure></p>
@@ -223,7 +223,7 @@
 <p>注意：避免出问题这里最好使用绝对路径。  </p>
 <h3 id="7-格式化NameNode：很重要！！！"><a href="#7-格式化NameNode：很重要！！！" class="headerlink" title="7 格式化NameNode：很重要！！！"></a>7 格式化NameNode：很重要！！！</h3><p>格式化HDFS文件系统：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop namenode –format</span><br></pre></td></tr></table></figure></p>
 <h3 id="8-克隆虚拟机"><a href="#8-克隆虚拟机" class="headerlink" title="8 克隆虚拟机"></a>8 克隆虚拟机</h3><p>将这台虚拟机关机，克隆两个完整副本，分别命名为slave1和slave2.<br>再分别将3台主机开机，查看每台主机的主机名并更正。  </p>
-<p>更改主机名及静态IP地址参见文末问题汇总。</p>
+<p>更改主机名及静态IP地址参见文末<a href="#jump">问题汇总</a>。</p>
 <h3 id="9-搭建Hadoop集群："><a href="#9-搭建Hadoop集群：" class="headerlink" title="9 搭建Hadoop集群："></a>9 搭建Hadoop集群：</h3><h4 id="9-1-编辑hosts文件"><a href="#9-1-编辑hosts文件" class="headerlink" title="9.1 编辑hosts文件"></a>9.1 编辑hosts文件</h4><p>编辑3个节点的hosts文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/hosts</span><br></pre></td></tr></table></figure></p>
 <p>在文件中添加其它容器的ip：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.5.123	master</span><br><span class="line">192.168.5.124	slave1</span><br><span class="line">192.168.5.125	slave2</span><br></pre></td></tr></table></figure></p>
 <p>在所有节点上启动ssh服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh start</span><br></pre></td></tr></table></figure></p>
@@ -239,7 +239,7 @@
 <p>这个时候应该能看到报告内容中包含了集群中各节点的信息，类似如下：<br><img src="/实战用ubuntu搭建Hadoop集群/nodes.png" alt="4"><br>还可以在宿主机的浏览器上访问master的web页面，在浏览器地址栏输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.5.123:50070</span><br></pre></td></tr></table></figure></p>
 <p>在web页面可以更方便管理Hadoop集群的节点。  </p>
 <p>到这里的话，一个包括3个节点的Hadoop集群就搭建起来了，而我们只用了一台普通的PC机，成本相当低了，另外，我们可以用本文用的方法轻松将3个节点扩展到更多节点。当然，这个集群的性能肯定比用高性能服务器搭建的集群要低很多了，所以，这个方法仅仅用于学习交流。  </p>
-<h3 id="11-Questions："><a href="#11-Questions：" class="headerlink" title="11 Questions："></a>11 Questions：</h3><ul>
+<h3 id="11-Questions："><a href="#11-Questions：" class="headerlink" title="11 Questions："></a>11 <span id="jump">Questions</span>：</h3><ul>
 <li>1.安装Java和Hadoop的时候，我用ftp的方式复制文件，但是后来发现有编码的问题，具体表现是解压的时候老是报错，经查是ftp传输的时候编码可能与ubuntu有冲突，后来通过U盘复制到ubuntu的，解压正常。用U盘复制的时候，将U盘连接到虚拟机后要手动挂载，先进<code>/dev</code>查看是否有U盘设备，一般来说是<code>sdb</code>，在用户目录新建目录用于挂载U盘，例如：<code>mkdir /home/eacong/usb</code>，再将U盘挂载到这个目录：<code>mount -t vfat /dev/sdb /home/eacong/usb</code>，这时就可以将U盘文件复制到虚拟机了。  </li>
 <li>2.更改ubuntu主机名有两种方式:<br>一是使用<code>sudo hostname 主机名</code>来临时更改，一旦重启即失效；<br>二是编辑<code>/etc/hostname</code>文件来永久更改主机名，重启依然有效。  </li>
 <li>3.设置静态IP地址<br>编辑文件:<br><code>sudo vi /etc/network/interfaces</code><br>将dhcp选项更改为static并在下面补充IP地址信息。示例如下：  </li>
@@ -514,6 +514,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tag1</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tag2</a>
               </li>
             
             <div class="clearfix"></div>
