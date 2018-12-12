@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Eacong&#39;s blog">
 <meta property="og:description" content="Hadoop集群搭建基于Linux，跟很多Linux上的服务一样，Hadoop集群的各种属性依赖于配置文件，本文给出Hadoop集群搭建中需要用到的配置文件及其中参数详解。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-12T06:54:02.242Z">
+<meta property="og:updated_time" content="2018-12-12T14:51:19.622Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop集群配置详解">
 <meta name="twitter:description" content="Hadoop集群搭建基于Linux，跟很多Linux上的服务一样，Hadoop集群的各种属性依赖于配置文件，本文给出Hadoop集群搭建中需要用到的配置文件及其中参数详解。">
@@ -171,7 +171,11 @@
       
         <p>Hadoop集群搭建基于Linux，跟很多Linux上的服务一样，Hadoop集群的各种属性依赖于配置文件，本文给出Hadoop集群搭建中需要用到的配置文件及其中参数详解。</p>
 <a id="more"></a>
-<h1 id="Hadoop集群架构回顾"><a href="#Hadoop集群架构回顾" class="headerlink" title="Hadoop集群架构回顾"></a>Hadoop集群架构回顾</h1><h1 id="配置文件及其参数详解"><a href="#配置文件及其参数详解" class="headerlink" title="配置文件及其参数详解"></a>配置文件及其参数详解</h1><p>## </p>
+<h1 id="Hadoop集群架构回顾"><a href="#Hadoop集群架构回顾" class="headerlink" title="Hadoop集群架构回顾"></a>Hadoop集群架构回顾</h1><h1 id="配置文件及其参数详解"><a href="#配置文件及其参数详解" class="headerlink" title="配置文件及其参数详解"></a>配置文件及其参数详解</h1><h2 id="hadoop-site-xml-集群特有的配置"><a href="#hadoop-site-xml-集群特有的配置" class="headerlink" title="hadoop-site.xml - 集群特有的配置"></a>hadoop-site.xml - 集群特有的配置</h2><h2 id="Hadoop的机架感知"><a href="#Hadoop的机架感知" class="headerlink" title="Hadoop的机架感知"></a>Hadoop的机架感知</h2><ul>
+<li>HDFS和Map/Reduce的组件是能够感知机架的。<br>NameNode和JobTracker通过调用管理员配置模块中的APIresolve来获取集群里每个slave的机架id。该API将slave的DNS名称（或者IP地址）转换成机架id。使用哪个模块是通过配置项topology.node.switch.mapping.impl来指定的。<br>模块的默认实现会调用topology.script.file.name配置项指定的一个的脚本/命令。<br>如果topology.script.file.name未被设置，对于所有传入的IP地址，模块会返回/default-rack作为机架id。在Map/Reduce部分还有一个额外的配置项mapred.cache.task.levels，该参数决定cache的级数（在网络拓扑中）。例如，如果默认值是2，会建立两级的cache－ 一级针对主机（主机 -&gt; 任务的映射）另一级针对机架（机架 -&gt; 任务的映射）。</li>
+</ul>
+<hr>
+<p>待更新…</p>
 
       
 
