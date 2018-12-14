@@ -8,13 +8,13 @@
   <link rel="dns-prefetch" href="https://eacong.github.io">
   <title>实战用ubuntu搭建Hadoop集群 | Eacong&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="利用ubuntu在PC机 (虚拟机)上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
+  <meta name="description" content="利用ubuntu在PC机 (虚拟机)上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。    2018-12-14更新集群扩展。">
 <meta name="keywords" content="Hadoop,ubutnu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="实战用ubuntu搭建Hadoop集群">
 <meta property="og:url" content="https://eacong.github.io/2018/12/04/实战用ubuntu搭建Hadoop集群/index.html">
 <meta property="og:site_name" content="Eacong&#39;s blog">
-<meta property="og:description" content="利用ubuntu在PC机 (虚拟机)上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
+<meta property="og:description" content="利用ubuntu在PC机 (虚拟机)上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。    2018-12-14更新集群扩展。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/master_jps.png">
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/slave1_jps.png">
@@ -22,10 +22,11 @@
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/nodes.png">
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/web.png">
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/browser.png">
-<meta property="og:updated_time" content="2018-12-12T07:25:22.781Z">
+<meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/cloneVM.png">
+<meta property="og:updated_time" content="2018-12-14T05:20:28.813Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实战用ubuntu搭建Hadoop集群">
-<meta name="twitter:description" content="利用ubuntu在PC机 (虚拟机)上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。">
+<meta name="twitter:description" content="利用ubuntu在PC机 (虚拟机)上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。    2018-12-14更新集群扩展。">
 <meta name="twitter:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/master_jps.png">
   
     <link rel="alternative" href="/atom.xml" title="Eacong&#39;s blog" type="application/atom+xml">
@@ -177,7 +178,10 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<p>利用ubuntu在PC机 (虚拟机)上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。</p>
+<p>利用ubuntu在PC机 (虚拟机)上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。  </p>
+<blockquote>
+<p>2018-12-14更新集群扩展。</p>
+</blockquote>
 <a id="more"></a>
 <h2 id="过程快速浏览"><a href="#过程快速浏览" class="headerlink" title="过程快速浏览"></a>过程快速浏览</h2><p>思路：</p>
 <ul>
@@ -252,6 +256,16 @@
 <li><a href="https://hadoop.apache.org/docs/r1.0.4/cn/quickstart.html" target="_blank" rel="noopener">Hadoop快速入门</a>；  </li>
 <li><a href="https://hadoop.apache.org/docs/r1.0.4/cn/hdfs_shell.html" target="_blank" rel="noopener">Hadoop Shell命令</a>。</li>
 </ol>
+<hr>
+<p>2018-12-14更新  </p>
+<h1 id="如何扩展集群节点"><a href="#如何扩展集群节点" class="headerlink" title="如何扩展集群节点"></a>如何扩展集群节点</h1><h2 id="1-克隆虚拟机"><a href="#1-克隆虚拟机" class="headerlink" title="1 克隆虚拟机"></a>1 克隆虚拟机</h2><p>在VMware中克隆一台slave虚拟机的完整副本。<br><img src="/实战用ubuntu搭建Hadoop集群/cloneVM.png" alt="7"><br>在克隆虚拟机向导中选择克隆虚拟机的完整副本并更改虚拟机名字为我们需要的新节点名字。</p>
+<h2 id="2-更改主机名"><a href="#2-更改主机名" class="headerlink" title="2 更改主机名"></a>2 更改主机名</h2><p>更改配置文件<br><code>sudo vi /etc/hostname</code><br>在配置文件中主机名改为新节点主机名。  </p>
+<h2 id="3-更改IP地址（静态）"><a href="#3-更改IP地址（静态）" class="headerlink" title="3 更改IP地址（静态）"></a>3 更改IP地址（静态）</h2><p>更改配置文件<br><code>sudo vi /etc/network/interfaces</code><br>在配置文件中把IP地址改为规划的IP地址。  </p>
+<h2 id="4-更改hosts文件"><a href="#4-更改hosts文件" class="headerlink" title="4 更改hosts文件"></a>4 更改hosts文件</h2><p>更改配置文件<br><code>sudo vi /etc/hosts</code><br>在配置文件中添加集群所有节点的主机名和IP地址。  </p>
+<h2 id="5-更改master中slave配置文件"><a href="#5-更改master中slave配置文件" class="headerlink" title="5 更改master中slave配置文件"></a>5 更改master中slave配置文件</h2><p>更改配置文件<br><code>sudo vi $HADOOP_HOME/etc/hadoop/slaves</code><br>在配置文件中添加所有DataNode的主机名。  </p>
+<h2 id="6-在NameNode上启动Hadoop进程"><a href="#6-在NameNode上启动Hadoop进程" class="headerlink" title="6 在NameNode上启动Hadoop进程"></a>6 在NameNode上启动Hadoop进程</h2><pre><code>cd $HADOOP_HOME/etc/hadoop/  
+start-all.sh  
+</code></pre><p>至此就完成了新节点的添加，集群得到了扩展。</p>
 
       
 
@@ -607,15 +621,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             </li>
           
             <li class="search-li">
-              <a href="https://cwy32.github.io/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>CWY</a>
+              <a href="https://cwy32.github.io/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>CWY的博客</a>
             </li>
           
             <li class="search-li">
-              <a href="https://qianmaoo.github.io/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>刘谦</a>
+              <a href="https://qianmaoo.github.io/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>刘谦的博客</a>
             </li>
           
             <li class="search-li">
-              <a href="https://badboylikeit.github.io/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>HandsomeLee</a>
+              <a href="https://badboylikeit.github.io/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>HandsomeLee的博客</a>
             </li>
           
         </ul>
