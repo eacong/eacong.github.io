@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Eacong&#39;s blog">
 <meta property="og:description" content="Hadoop集群搭建基于Linux，跟很多Linux上的服务一样，Hadoop集群的各种属性依赖于配置文件，本文给出Hadoop集群搭建中需要用到的配置文件及其中参数详解。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-12T14:51:19.622Z">
+<meta property="og:updated_time" content="2018-12-15T06:57:28.711Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop集群配置详解">
 <meta name="twitter:description" content="Hadoop集群搭建基于Linux，跟很多Linux上的服务一样，Hadoop集群的各种属性依赖于配置文件，本文给出Hadoop集群搭建中需要用到的配置文件及其中参数详解。">
@@ -171,11 +171,44 @@
       
         <p>Hadoop集群搭建基于Linux，跟很多Linux上的服务一样，Hadoop集群的各种属性依赖于配置文件，本文给出Hadoop集群搭建中需要用到的配置文件及其中参数详解。</p>
 <a id="more"></a>
-<h1 id="Hadoop集群架构回顾"><a href="#Hadoop集群架构回顾" class="headerlink" title="Hadoop集群架构回顾"></a>Hadoop集群架构回顾</h1><h1 id="配置文件及其参数详解"><a href="#配置文件及其参数详解" class="headerlink" title="配置文件及其参数详解"></a>配置文件及其参数详解</h1><h2 id="hadoop-site-xml-集群特有的配置"><a href="#hadoop-site-xml-集群特有的配置" class="headerlink" title="hadoop-site.xml - 集群特有的配置"></a>hadoop-site.xml - 集群特有的配置</h2><h2 id="Hadoop的机架感知"><a href="#Hadoop的机架感知" class="headerlink" title="Hadoop的机架感知"></a>Hadoop的机架感知</h2><ul>
-<li>HDFS和Map/Reduce的组件是能够感知机架的。<br>NameNode和JobTracker通过调用管理员配置模块中的APIresolve来获取集群里每个slave的机架id。该API将slave的DNS名称（或者IP地址）转换成机架id。使用哪个模块是通过配置项topology.node.switch.mapping.impl来指定的。<br>模块的默认实现会调用topology.script.file.name配置项指定的一个的脚本/命令。<br>如果topology.script.file.name未被设置，对于所有传入的IP地址，模块会返回/default-rack作为机架id。在Map/Reduce部分还有一个额外的配置项mapred.cache.task.levels，该参数决定cache的级数（在网络拓扑中）。例如，如果默认值是2，会建立两级的cache－ 一级针对主机（主机 -&gt; 任务的映射）另一级针对机架（机架 -&gt; 任务的映射）。</li>
+<h1 id="1-Hadoop集群架构回顾"><a href="#1-Hadoop集群架构回顾" class="headerlink" title="1 Hadoop集群架构回顾"></a>1 Hadoop集群架构回顾</h1><h1 id="2-配置文件及其参数详解"><a href="#2-配置文件及其参数详解" class="headerlink" title="2 配置文件及其参数详解"></a>2 配置文件及其参数详解</h1><h2 id="2-1-hadoop-site-xml-集群特有的配置"><a href="#2-1-hadoop-site-xml-集群特有的配置" class="headerlink" title="2.1 hadoop-site.xml - 集群特有的配置"></a>2.1 hadoop-site.xml - 集群特有的配置</h2><h3 id="2-1-1-Hadoop的机架感知"><a href="#2-1-1-Hadoop的机架感知" class="headerlink" title="2.1.1 Hadoop的机架感知"></a>2.1.1 Hadoop的机架感知</h3><p>HDFS和Map/Reduce的组件是能够感知机架的。<br>NameNode和JobTracker通过调用管理员配置模块中的APIresolve来获取集群里每个slave的机架id。该API将slave的DNS名称（或者IP地址）转换成机架id。<br>相关配置项及含义：  </p>
+<ul>
+<li>topology.node.switch.mapping.impl===&gt;指定使用哪个模块    </li>
+<li>topology.script.file.name===&gt;模块的默认实现  <blockquote>
+<p>注：如果topology.script.file.name未被设置，对于所有传入的IP地址，模块会返回/default-rack作为机架id。  </p>
+</blockquote>
+</li>
+<li>mapred.cache.task.levels===&gt;该参数决定cache的级数（在网络拓扑中）。  <blockquote>
+<p>这是在Map/Reduce部分一个额外的配置项。例如，如果默认值是2，会建立两级的cache,一级针对主机（主机 -&gt; 任务的映射）另一级针对机架（机架 -&gt; 任务的映射）。</p>
+</blockquote>
+<h2 id="2-2-core-site-xml参数详解"><a href="#2-2-core-site-xml参数详解" class="headerlink" title="2.2 core-site.xml参数详解"></a>2.2 core-site.xml参数详解</h2></li>
 </ul>
+<h3 id="2-2-1-主要参数"><a href="#2-2-1-主要参数" class="headerlink" title="2.2.1 主要参数"></a>2.2.1 主要参数</h3><ul>
+<li>hadoop.tmp.dir===&gt;Hadoop临时文件存放的路径</li>
+<li>fs.default.name===&gt;HDFS服务器名称和端口</li>
+<li>io.file.buffer.size===&gt;文件块的大小<blockquote>
+<p>默认是64MB，一般使用128MB</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="2-2-2-全部参数"><a href="#2-2-2-全部参数" class="headerlink" title="2.2.2 全部参数"></a>2.2.2 全部参数</h3><p>参见官方<a href="http://hadoop.apache.org/docs/r2.9.1/hadoop-project-dist/hadoop-common/core-default.xml" target="_blank" rel="noopener">core-site.xml参数说明表格</a>。  </p>
+<h2 id="2-3-hdfs-site-xml参数详解"><a href="#2-3-hdfs-site-xml参数详解" class="headerlink" title="2.3 hdfs-site.xml参数详解"></a>2.3 hdfs-site.xml参数详解</h2><h3 id="2-3-1-主要参数"><a href="#2-3-1-主要参数" class="headerlink" title="2.3.1 主要参数"></a>2.3.1 主要参数</h3><ul>
+<li>dfs.replication===&gt;DataNode的数量</li>
+<li>dfs.namenode.name.dir===&gt;NameNode存放文件的路径</li>
+<li>dfs.datanode.data.dir===&gt;DataNode存放文件的路径</li>
+</ul>
+<h3 id="2-3-2-全部参数"><a href="#2-3-2-全部参数" class="headerlink" title="2.3.2 全部参数"></a>2.3.2 全部参数</h3><p>参见官方<a href="http://hadoop.apache.org/docs/r2.9.1/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml" target="_blank" rel="noopener">hdfs-site.xml参数说明表格</a>。  </p>
+<h2 id="2-4-mapred-site-xml参数详解"><a href="#2-4-mapred-site-xml参数详解" class="headerlink" title="2.4 mapred-site.xml参数详解"></a>2.4 mapred-site.xml参数详解</h2><h3 id="2-4-1-主要参数"><a href="#2-4-1-主要参数" class="headerlink" title="2.4.1 主要参数"></a>2.4.1 主要参数</h3><ul>
+<li>mapred.job.tracker===&gt;JobTracker服务运行的主机和端口号  </li>
+</ul>
+<h3 id="2-4-2-全部参数"><a href="#2-4-2-全部参数" class="headerlink" title="2.4.2 全部参数"></a>2.4.2 全部参数</h3><p>参见官方<a href="http://hadoop.apache.org/docs/r2.9.1/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml" target="_blank" rel="noopener">mapred-site.xml参数说明表格</a>。  </p>
+<h2 id="2-5-yarn-site-xml参数详解"><a href="#2-5-yarn-site-xml参数详解" class="headerlink" title="2.5 yarn-site.xml参数详解"></a>2.5 yarn-site.xml参数详解</h2><h3 id="2-5-1-主要参数"><a href="#2-5-1-主要参数" class="headerlink" title="2.5.1 主要参数"></a>2.5.1 主要参数</h3><ul>
+<li>yarn.resourcemanager.hostname===&gt;资源管理角色所在主机的主机名  </li>
+</ul>
+<h3 id="2-5-2-全部参数"><a href="#2-5-2-全部参数" class="headerlink" title="2.5.2 全部参数"></a>2.5.2 全部参数</h3><p>参见官方<a href="http://hadoop.apache.org/docs/r2.9.1/hadoop-yarn/hadoop-yarn-common/yarn-default.xml" target="_blank" rel="noopener">yarn-site.xml参数说明表格</a>。  </p>
+<h2 id="2-6-hadoop-主要API"><a href="#2-6-hadoop-主要API" class="headerlink" title="2.6 hadoop 主要API"></a>2.6 hadoop 主要API</h2><p>参见官方<a href="http://hadoop.apache.org/docs/r2.9.1/api/index.html" target="_blank" rel="noopener">hadoop 主要API</a>。  </p>
 <hr>
-<p>待更新…</p>
+<p>根据不同的需求，可以灵活调整这些参数，达到人们的期望。</p>
 
       
 
