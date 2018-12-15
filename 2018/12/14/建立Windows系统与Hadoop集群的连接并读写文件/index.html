@@ -21,7 +21,15 @@
 <meta property="og:image" content="https://eacong.github.io/建立Windows系统与Hadoop集群的连接并读写文件/plugin2.png">
 <meta property="og:image" content="https://eacong.github.io/建立Windows系统与Hadoop集群的连接并读写文件/windowsuser.png">
 <meta property="og:image" content="https://eacong.github.io/建立Windows系统与Hadoop集群的连接并读写文件/hdfsuser.png">
-<meta property="og:updated_time" content="2018-12-14T14:46:50.419Z">
+<meta property="og:image" content="https://eacong.github.io/建立Windows系统与Hadoop集群的连接并读写文件/mapreduce1.png">
+<meta property="og:image" content="https://eacong.github.io/建立Windows系统与Hadoop集群的连接并读写文件/mapreduce2.png">
+<meta property="og:image" content="https://eacong.github.io/建立Windows系统与Hadoop集群的连接并读写文件/ui.png">
+<meta property="og:image" content="https://eacong.github.io/建立Windows系统与Hadoop集群的连接并读写文件/new.png">
+<meta property="og:image" content="https://eacong.github.io/建立Windows系统与Hadoop集群的连接并读写文件/newlocation.png">
+<meta property="og:image" content="https://eacong.github.io/建立Windows系统与Hadoop集群的连接并读写文件/advance.png">
+<meta property="og:image" content="https://eacong.github.io/建立Windows系统与Hadoop集群的连接并读写文件/newui.png">
+<meta property="og:image" content="https://eacong.github.io/建立Windows系统与Hadoop集群的连接并读写文件/operate.png">
+<meta property="og:updated_time" content="2018-12-15T05:31:33.388Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="建立Windows系统与Hadoop集群的连接并读写文件">
 <meta name="twitter:description" content="在Windows下用MyEclipse建立与HDFS文件系统的连接，并进行文件读写操作。">
@@ -178,23 +186,52 @@
         <p>在Windows下用MyEclipse建立与HDFS文件系统的连接，并进行文件读写操作。<br><a id="more"></a></p>
 <h1 id="1-前期准备"><a href="#1-前期准备" class="headerlink" title="1 前期准备"></a>1 前期准备</h1><p>准备连接的环境和软件材料。</p>
 <h2 id="1-1-安装Java并配置好环境变量"><a href="#1-1-安装Java并配置好环境变量" class="headerlink" title="1.1 安装Java并配置好环境变量"></a>1.1 安装Java并配置好环境变量</h2><p>下载oracle官网的JRE并安装、设置环境变量 (默认情况自动设置，若出问题了检查一下环境变量是否出错了)，本案例中使用的是<code>jre-8u191-windows-x64.exe</code>文件。</p>
-<h2 id="1-2-安装Windows版MyEclipse"><a href="#1-2-安装Windows版MyEclipse" class="headerlink" title="1.2 安装Windows版MyEclipse"></a>1.2 安装Windows版MyEclipse</h2><p>安装MyEclipse，记住安装路径，后面要用，本案例用的是<code>C:\Program Files\MyEclipse Professional 2014\</code>。</p>
+<h2 id="1-2-安装Windows版MyEclipse"><a href="#1-2-安装Windows版MyEclipse" class="headerlink" title="1.2 安装Windows版MyEclipse"></a>1.2 安装Windows版MyEclipse</h2><p>安装MyEclipse，本案例使用的软件版本是<code>myeclipse-pro-2014-GA</code>，而且要记住安装路径，后面要用，本案例用的是<code>C:\Program Files\MyEclipse Professional 2014\</code>。</p>
 <h2 id="1-3-下载eclipse插件"><a href="#1-3-下载eclipse插件" class="headerlink" title="1.3 下载eclipse插件"></a>1.3 下载eclipse插件</h2><p>本案例中用的是<code>hadoop-eclipse-plugin-2.7.2.jar</code>文件，如果没有可以在我分享的<a href="https://pan.baidu.com/s/1Qj6H-rR010QqdLY8nkwVXg" target="_blank" rel="noopener">百度网盘</a>下载。</p>
 <h1 id="2-用MyEclipse连接HDFS集群"><a href="#2-用MyEclipse连接HDFS集群" class="headerlink" title="2 用MyEclipse连接HDFS集群"></a>2 用MyEclipse连接HDFS集群</h1><h2 id="2-1-安装Hadoop到Windows"><a href="#2-1-安装Hadoop到Windows" class="headerlink" title="2.1 安装Hadoop到Windows"></a>2.1 安装Hadoop到Windows</h2><blockquote>
 <p>说明一点：这里所谓的安装Hadoop到Windows不是指Windows上面要跑什么服务，而是说要连接Windows和Hadoop集群，Windows也需要相关的文件才能连接起来，所有的HDFS服务都是在Hadoop集群上面。  </p>
 </blockquote>
 <p>安装Hadoop也不是平常安装软件那种方法，而是直接把<code>hadoop-2.9.2.tar.gz</code>解压到某一个路径就可以了 (这个文件里包含了Windows和Linux版本的各类文件)。我是解压到C盘根目录的。如下图：<br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/hadoop.png" alt="1"> </p>
 <h2 id="2-2-配置MyEclipse"><a href="#2-2-配置MyEclipse" class="headerlink" title="2.2 配置MyEclipse"></a>2.2 配置MyEclipse</h2><ul>
-<li>要用到我们需要的插件，要把之前准备的<code>hadoop-eclipse-plugin.jar</code>插件复制到MyEclipse安装路径的<code>plugins</code>目录中。如下图：<br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/plugin.png" alt="2"> </li>
-<li>打开MyEclipse，在<code>Window-Preferences</code>中可以看到<code>Hadoop Map/Reduce</code>选项，在右上角的<code>Browse</code>处打开Windows本机安装的Hadoop路径，本案例中Hadoop解压在C盘根目录<code>C:\hadoop-2.9.2</code>，如下图：<br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/plugin2.png" alt="3"></li>
+<li><p>要用到我们需要的插件，要把之前准备的<code>hadoop-eclipse-plugin.jar</code>插件复制到MyEclipse安装路径的<code>plugins</code>目录中。如下图：<br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/plugin.png" alt="2"> </p>
+</li>
+<li><p>打开MyEclipse，在<code>Window-Preferences</code>中可以看到<code>Hadoop Map/Reduce</code>选项，在右上角的<code>Browse</code>处打开Windows本机安装的Hadoop路径，本案例中Hadoop解压在C盘根目录<code>C:\hadoop-2.9.2</code>，如下图：<br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/plugin2.png" alt="3"></p>
+</li>
 </ul>
 <h2 id="2-3-用户名-很重要"><a href="#2-3-用户名-很重要" class="headerlink" title="2.3 用户名 (很重要)"></a>2.3 用户名 (很重要)</h2><p>要保证Windows中用于访问Hadoop集群的用户名和Hadoop集群中NameNode节点启动HDFS服务的用户名一致，否则会有权限的问题。  </p>
 <ul>
-<li>Windows用户名：<br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/windowsuser.png" alt="4">  </li>
-<li>HDFS服务启动用户名：<br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/hdfsuser.png" alt="5">  <h2 id="2-4"><a href="#2-4" class="headerlink" title="2.4"></a>2.4</h2></li>
+<li>Windows用户名：  </li>
 </ul>
+<p><img src="/建立Windows系统与Hadoop集群的连接并读写文件/windowsuser.png" alt="4">  </p>
+<ul>
+<li>HDFS服务启动用户名：  </li>
+</ul>
+<p><img src="/建立Windows系统与Hadoop集群的连接并读写文件/hdfsuser.png" alt="5">  </p>
+<ul>
+<li>更改Windows用户名后需要重启电脑或者注销账户重新登录。  </li>
+</ul>
+<h2 id="2-4-在MyEclipse中打开“Map-Reduce”工作目录"><a href="#2-4-在MyEclipse中打开“Map-Reduce”工作目录" class="headerlink" title="2.4 在MyEclipse中打开“Map/Reduce”工作目录"></a>2.4 在MyEclipse中打开“Map/Reduce”工作目录</h2><ul>
+<li><p>在MyEclipse中选择<code>Window</code>标签，点击<code>Open Perspective</code>，再点击<code>other</code>，最后选择<code>Map/Reduce</code>，如下所示：<br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/mapreduce1.png" alt="6"><br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/mapreduce2.png" alt="7">  </p>
+</li>
+<li><p>打开后可以看到在窗口左边<code>Project Explorer</code>标签出现<code>DFS Locations</code>，窗口下面出现<code>Map/Reduce Locations</code>，如下图：<br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/ui.png" alt="8">  </p>
+</li>
+</ul>
+<h2 id="2-5-新建连接"><a href="#2-5-新建连接" class="headerlink" title="2.5 新建连接"></a>2.5 新建连接</h2><ul>
+<li><p>右击下面<code>Map/Reduce Locations</code>中的<code>Location</code>新建一个连接来连接Windows和HDFS集群，如下图：<br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/new.png" alt="9">  </p>
+</li>
+<li><p>在<code>general</code>选项卡中填写新连接的名字，本案例使用<code>Win2Hadoop</code>，按照集群的参数来地址、端口、用户名等，如下图：<br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/newlocation.png" alt="10">  </p>
+</li>
+<li><p>在<code>Advanced parameters</code>选项卡中找到<code>hadoop.tmp.dir</code>，把这里的地址设置成在Hadoop集群中Hadoop临时文件存放的路径，本案例中使用的是<code>/home/eacong/apache/hadoop/hadoop-2.9.2/tmp</code>，如下图：<br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/advance.png" alt="13">  </p>
+</li>
+<li><p>点击<code>finish</code>完成后可以看到新建的连接<code>Win2Hadoop</code>，如下图：<br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/newui.png" alt="11">  </p>
+</li>
+</ul>
+<h2 id="2-6-操作HDFS文件系统"><a href="#2-6-操作HDFS文件系统" class="headerlink" title="2.6 操作HDFS文件系统"></a>2.6 操作HDFS文件系统</h2><p>这时候就可以通过这个图形界面来控制与HDFS集群文件系统的信息交互了，可以新建、删除文件夹；下载、上传、删除文件等操作，如下图：<br><img src="/建立Windows系统与Hadoop集群的连接并读写文件/operate.png" alt="12">  </p>
+<p>这个时候就建立了Windows与Hadoop集群的连接，并且可以进行文件读写操作了。</p>
+<h1 id="3-可能会遇到的问题"><a href="#3-可能会遇到的问题" class="headerlink" title="3 可能会遇到的问题"></a>3 可能会遇到的问题</h1><h2 id="3-1-没有权限"><a href="#3-1-没有权限" class="headerlink" title="3.1 没有权限"></a>3.1 没有权限</h2><p>连接不上，多半是权限问题，在2.3步我们把Windows中的用户名改为了启动或运行HDFS服务的用户名，要访问这个集群，我们也一定要改访问的用户名。即2.3步一定要执行。  </p>
+<h2 id="3-2-权限不够"><a href="#3-2-权限不够" class="headerlink" title="3.2 权限不够"></a>3.2 权限不够</h2><p>连接上了，可能没有写权限，需要在集群后台修改文件系统中各个文件夹的权限，索性把根目录<code>/</code>权限置为<code>777</code>，即所有用户都能进行读写，具体命令如下：<br><code>eacong@master:~$ hadoop fs -chmod -R 777 /</code><br>本案例仅从实验的角度出发，权限问题不可忽视，实际操作不能生搬硬套。</p>
 <hr>
-<p>本文参照CSDN博客,如有需要请访问<a href="">原文</a></p>
+<p>本文参照CSDN博客,如有需要请访问<a href="https://blog.csdn.net/lifuxiangcaohui/article/details/39500131" target="_blank" rel="noopener">原文</a></p>
 
       
 

@@ -23,7 +23,7 @@
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/web.png">
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/browser.png">
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/cloneVM.png">
-<meta property="og:updated_time" content="2018-12-14T05:33:24.562Z">
+<meta property="og:updated_time" content="2018-12-15T05:35:51.910Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实战用ubuntu搭建Hadoop集群">
 <meta name="twitter:description" content="利用ubuntu在PC机 (虚拟机)上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。    2018-12-14更新集群扩展。">
@@ -260,9 +260,11 @@
 <hr>
 <p>2018-12-14更新  </p>
 <h1 id="如何扩展集群节点"><a href="#如何扩展集群节点" class="headerlink" title="如何扩展集群节点"></a><span id="ex">如何扩展集群节点</span></h1><h2 id="1-克隆虚拟机"><a href="#1-克隆虚拟机" class="headerlink" title="1 克隆虚拟机"></a>1 克隆虚拟机</h2><p>在VMware中克隆一台slave虚拟机的完整副本。<br><img src="/实战用ubuntu搭建Hadoop集群/cloneVM.png" alt="7"><br>在克隆虚拟机向导中选择克隆虚拟机的完整副本并更改虚拟机名字为我们需要的新节点名字。</p>
-<h2 id="2-更改主机名"><a href="#2-更改主机名" class="headerlink" title="2 更改主机名"></a>2 更改主机名</h2><p>更改配置文件<br><code>sudo vi /etc/hostname</code><br>在配置文件中主机名改为新节点主机名。  </p>
-<h2 id="3-更改IP地址（静态）"><a href="#3-更改IP地址（静态）" class="headerlink" title="3 更改IP地址（静态）"></a>3 更改IP地址（静态）</h2><p>更改配置文件<br><code>sudo vi /etc/network/interfaces</code><br>在配置文件中把IP地址改为规划的IP地址。  </p>
-<h2 id="4-更改hosts文件"><a href="#4-更改hosts文件" class="headerlink" title="4 更改hosts文件"></a>4 更改hosts文件</h2><p>更改配置文件<br><code>sudo vi /etc/hosts</code><br>在配置文件中添加集群所有节点的主机名和IP地址。  </p>
+<h2 id="2-更改主机名"><a href="#2-更改主机名" class="headerlink" title="2 更改主机名"></a>2 更改主机名</h2><p>更改配置文件<br><code>sudo vi /etc/hostname</code><br>在配置文件中主机名改为新节点主机名，重启主机生效。  </p>
+<h2 id="3-更改IP地址（静态）"><a href="#3-更改IP地址（静态）" class="headerlink" title="3 更改IP地址（静态）"></a>3 更改IP地址（静态）</h2><p>更改配置文件<br><code>sudo vi /etc/network/interfaces</code><br>在配置文件中把IP地址改为规划的IP地址。重启网卡生效，可使用以下命令：  </p>
+<pre><code>sudo ifdown eth0  
+sudo ifup eth0  
+</code></pre><h2 id="4-更改hosts文件"><a href="#4-更改hosts文件" class="headerlink" title="4 更改hosts文件"></a>4 更改hosts文件</h2><p>更改配置文件<br><code>sudo vi /etc/hosts</code><br>在配置文件中添加集群所有节点的主机名和IP地址，重启主机生效。  </p>
 <h2 id="5-更改master中slave配置文件"><a href="#5-更改master中slave配置文件" class="headerlink" title="5 更改master中slave配置文件"></a>5 更改master中slave配置文件</h2><p>更改配置文件<br><code>sudo vi $HADOOP_HOME/etc/hadoop/slaves</code><br>在配置文件中添加所有DataNode的主机名。  </p>
 <h2 id="6-在NameNode上启动Hadoop进程"><a href="#6-在NameNode上启动Hadoop进程" class="headerlink" title="6 在NameNode上启动Hadoop进程"></a>6 在NameNode上启动Hadoop进程</h2><pre><code>cd $HADOOP_HOME/etc/hadoop/  
 start-all.sh  
