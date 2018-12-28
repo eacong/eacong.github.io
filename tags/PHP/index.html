@@ -6,20 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://eacong.github.io">
-  <title>浅谈存储技术的发展与最新技术 | Eacong&#39;s blog</title>
+  <title>Tag: PHP | Eacong&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="存储技术是计算机系统的关键技术之一。从早期的单CPU计算机中为解决速度冲突的不同层次的存储系统，包括寄存器、SRAM、DRAM、外部存储器等，到现如今大数据时代的海量数据处理的分布式存储系统，包括Google公司的GFS、Apache公司的Hadoop HDFS等，它们都极大地影响着其对应计算机系统（包括小型计算机系统以及虚拟化服务器集群系统等）的性能。因此，提高存储系统的性能和可靠性有着重大的意">
-<meta name="keywords" content="存储技术">
-<meta property="og:type" content="article">
-<meta property="og:title" content="浅谈存储技术的发展与最新技术">
-<meta property="og:url" content="https://eacong.github.io/2018/11/26/浅谈存储技术的发展与最新技术/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Eacong&#39;s blog">
+<meta property="og:url" content="https://eacong.github.io/tags/PHP/index.html">
 <meta property="og:site_name" content="Eacong&#39;s blog">
-<meta property="og:description" content="存储技术是计算机系统的关键技术之一。从早期的单CPU计算机中为解决速度冲突的不同层次的存储系统，包括寄存器、SRAM、DRAM、外部存储器等，到现如今大数据时代的海量数据处理的分布式存储系统，包括Google公司的GFS、Apache公司的Hadoop HDFS等，它们都极大地影响着其对应计算机系统（包括小型计算机系统以及虚拟化服务器集群系统等）的性能。因此，提高存储系统的性能和可靠性有着重大的意">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-12T06:42:09.055Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浅谈存储技术的发展与最新技术">
-<meta name="twitter:description" content="存储技术是计算机系统的关键技术之一。从早期的单CPU计算机中为解决速度冲突的不同层次的存储系统，包括寄存器、SRAM、DRAM、外部存储器等，到现如今大数据时代的海量数据处理的分布式存储系统，包括Google公司的GFS、Apache公司的Hadoop HDFS等，它们都极大地影响着其对应计算机系统（包括小型计算机系统以及虚拟化服务器集群系统等）的性能。因此，提高存储系统的性能和可靠性有着重大的意">
+<meta name="twitter:title" content="Eacong&#39;s blog">
   
     <link rel="alternative" href="/atom.xml" title="Eacong&#39;s blog" type="application/atom+xml">
   
@@ -149,185 +144,64 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-浅谈存储技术的发展与最新技术" class="article article-type-post " itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      浅谈存储技术的发展与最新技术
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/12/28/网安所PHP编码规范/" class="archive-article-date">
+  	<time datetime="2018-12-28T14:36:04.639Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-28</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/12/28/网安所PHP编码规范/">PHP编码规范</a>
     </h1>
   
 
-        
-        <a href="/2018/11/26/浅谈存储技术的发展与最新技术/" class="archive-article-date">
-  	<time datetime="2018-11-26T05:45:25.756Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>存储技术是计算机系统的关键技术之一。从早期的单CPU计算机中为解决速度冲突的不同层次的存储系统，包括寄存器、SRAM、DRAM、外部存储器等，到现如今大数据时代的海量数据处理的分布式存储系统，包括Google公司的GFS、Apache公司的Hadoop HDFS等，它们都极大地影响着其对应计算机系统（包括小型计算机系统以及虚拟化服务器集群系统等）的性能。因此，提高存储系统的性能和可靠性有着重大的意义。  </p>
-<a id="more"></a>
-<p>正如刚才的描述，不同计算机系统的层次对应了不同存储系统的层次。在小型计算机系统中，为解决存储的高可靠和高可用等性能，可使用RAID（廉价冗余磁盘阵列）技术来达到目的，即用多个磁盘组成一个具有一定抗毁能力的逻辑存储空间，在按需使用这些空间；在小型计算机集群中，为达到集群高可用和高可靠，可使用专门的独立存储系统，如NAS、DAS、SAN等，以最常用的SAN（存储局域网）为例，通常是用多个物理独立的磁盘组成一个更大的具有高可靠及高可用的独立存储系统，再通过IP网络（iSCIS技术）或者其他连接方式（FC）将该独立存储系统连接到计算节点中共同组成计算机集群，小型私有云通常采用这种解决方案；在今天这个大数据时代，数据中心往往要存储海量的数据，因此诞生了针对海量数据处理的分布式存储技术，这种存储主要是整合了更多更大的存储器或是存储系统而组成一个巨大的存储池，通过特别的存储算法的优化来提高数据的处理能力，这种技术通常用到大型云计算中心，比如公有云。</p>
-<p>存储技术的根本作用就是为解决数据的存放问题，但随着计算机技术和信息行业的发展，诞生了很多不同级别和性能的存储技术。而往后推移，随着人工智能技术的崛起，新的计算机系统又会面临新的存储挑战，而如何去解决新的问题，还需要工业和研究机构共同去面对。  </p>
-<p>待更新… </p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃麻辣烫<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/assets/Alipay.png">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/assets/WeChatPay.png">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">存储技术</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">PHP</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">网安所</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://eacong.github.io/2018/11/26/浅谈存储技术的发展与最新技术/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/11/26/HDFS小结/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          HDFS小结
-        
-      </div>
-    </a>
   
   
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -350,9 +224,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
