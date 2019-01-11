@@ -23,7 +23,7 @@
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/web.png">
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/browser.png">
 <meta property="og:image" content="https://eacong.github.io/实战用ubuntu搭建Hadoop集群/cloneVM.png">
-<meta property="og:updated_time" content="2018-12-16T07:16:50.662Z">
+<meta property="og:updated_time" content="2019-01-11T09:47:25.845Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实战用ubuntu搭建Hadoop集群">
 <meta name="twitter:description" content="利用ubuntu在PC机 (虚拟机)上搭建起3台节点的Hadoop集群，其中一台master (namenode)，两台slave (datanode)，并非高可用，仅适用于学习交流。    2018-12-14更新集群扩展。">
@@ -228,17 +228,17 @@
 <p>这里配置的即是MapReduce中JobTracker服务运行的主机和端口号，第4行代码表示本案例中JobTracker服务运行在master主机，端口号为9001。  </p>
 <h5 id="6-2-4-配置JAVA-HOME环境变量"><a href="#6-2-4-配置JAVA-HOME环境变量" class="headerlink" title="6.2.4 配置JAVA_HOME环境变量"></a>6.2.4 配置JAVA_HOME环境变量</h5><p>修改hadoop-env.sh文件，在#The java implementation to use之后添加如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#The java implementation to use  </span><br><span class="line">export JAVA_HOME=/home/eacong/java/jdk1.8.0_191</span><br></pre></td></tr></table></figure></p>
 <p>注意：避免出问题这里最好使用绝对路径。  </p>
-<h3 id="7-格式化NameNode：很重要！！！"><a href="#7-格式化NameNode：很重要！！！" class="headerlink" title="7 格式化NameNode：很重要！！！"></a>7 格式化NameNode：很重要！！！</h3><p>格式化HDFS文件系统：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop namenode –format</span><br></pre></td></tr></table></figure></p>
-<h3 id="8-克隆虚拟机"><a href="#8-克隆虚拟机" class="headerlink" title="8 克隆虚拟机"></a>8 克隆虚拟机</h3><p>将这台虚拟机关机，克隆两个完整副本，分别命名为slave1和slave2.<br>再分别将3台主机开机，查看每台主机的主机名并更正。  </p>
+<h3 id="7-克隆虚拟机"><a href="#7-克隆虚拟机" class="headerlink" title="7 克隆虚拟机"></a>7 克隆虚拟机</h3><p>将这台虚拟机关机，克隆两个完整副本，分别命名为slave1和slave2.<br>再分别将3台主机开机，查看每台主机的主机名并更正。  </p>
 <p>更改主机名及静态IP地址参见文末<a href="#jump">问题汇总</a>。</p>
-<h3 id="9-搭建Hadoop集群："><a href="#9-搭建Hadoop集群：" class="headerlink" title="9 搭建Hadoop集群："></a>9 搭建Hadoop集群：</h3><h4 id="9-1-编辑hosts文件"><a href="#9-1-编辑hosts文件" class="headerlink" title="9.1 编辑hosts文件"></a>9.1 编辑hosts文件</h4><p>编辑3个节点的hosts文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/hosts</span><br></pre></td></tr></table></figure></p>
+<h3 id="8-搭建Hadoop集群："><a href="#8-搭建Hadoop集群：" class="headerlink" title="8 搭建Hadoop集群："></a>8 搭建Hadoop集群：</h3><h4 id="8-1-编辑hosts文件"><a href="#8-1-编辑hosts文件" class="headerlink" title="8.1 编辑hosts文件"></a>8.1 编辑hosts文件</h4><p>编辑3个节点的hosts文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/hosts</span><br></pre></td></tr></table></figure></p>
 <p>在文件中添加其它容器的ip：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.5.123	master</span><br><span class="line">192.168.5.124	slave1</span><br><span class="line">192.168.5.125	slave2</span><br></pre></td></tr></table></figure></p>
 <p>在所有节点上启动ssh服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh start</span><br></pre></td></tr></table></figure></p>
 <p>测试：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eacong@master:/#ssh slave1</span><br><span class="line">eacong@master:/#ssh slave2</span><br></pre></td></tr></table></figure></p>
 <p>这个时候master应该能登录到slave1和slave2上。</p>
-<h4 id="9-2-配置slaves文件"><a href="#9-2-配置slaves文件" class="headerlink" title="9.2 配置slaves文件"></a>9.2 配置slaves文件</h4><p>slave文件里指定了NameNode能管理哪些DataNode，配置master的slaves文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HADOOP_HOME/etc/hadoop</span><br><span class="line">vi slaves</span><br></pre></td></tr></table></figure></p>
+<h4 id="8-2-配置slaves文件"><a href="#8-2-配置slaves文件" class="headerlink" title="8.2 配置slaves文件"></a>8.2 配置slaves文件</h4><p>slave文件里指定了NameNode能管理哪些DataNode，配置master的slaves文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HADOOP_HOME/etc/hadoop</span><br><span class="line">vi slaves</span><br></pre></td></tr></table></figure></p>
 <p>添加所有DataNode：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slave1</span><br><span class="line">slave2</span><br></pre></td></tr></table></figure></p>
 <p>查看是否更改成功：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat slaves</span><br></pre></td></tr></table></figure></p>
+<h3 id="9-格式化NameNode：很重要！！！"><a href="#9-格式化NameNode：很重要！！！" class="headerlink" title="9 格式化NameNode：很重要！！！"></a>9 格式化NameNode：很重要！！！</h3><p>格式化HDFS文件系统：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop namenode –format</span><br></pre></td></tr></table></figure></p>
 <h3 id="10-启动Hadoop"><a href="#10-启动Hadoop" class="headerlink" title="10 启动Hadoop"></a>10 启动Hadoop</h3><p>此时整个集群环境就搭建好了，我们来启动Hadoop，在master上面启动：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@master: ~/hadoop/hadoop-2.9.2/etc/hadoop# start-all.sh</span><br></pre></td></tr></table></figure></p>
 <p>可以在slave上面输入如下命令看到服务起来没有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps</span><br></pre></td></tr></table></figure></p>
 <p>这个时候应该能在master上看到如下4个进程：<br><img src="/实战用ubuntu搭建Hadoop集群/master_jps.png" alt="1"><br>应该能在slave1上看到如下3个进程：<br><img src="/实战用ubuntu搭建Hadoop集群/slave1_jps.png" alt="2"><br>应该能在slave2上看到如下3个进程：<br><img src="/实战用ubuntu搭建Hadoop集群/slave2_jps.png" alt="3"><br>测试Hadoop下的程序：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs -mkdir /user</span><br><span class="line">hdfs dfs -mkdir /user/root</span><br></pre></td></tr></table></figure></p>
@@ -261,16 +261,12 @@
 <p>2018-12-14更新  </p>
 <h1 id="如何扩展集群节点"><a href="#如何扩展集群节点" class="headerlink" title="如何扩展集群节点"></a><span id="ex">如何扩展集群节点</span></h1><h2 id="1-克隆虚拟机"><a href="#1-克隆虚拟机" class="headerlink" title="1 克隆虚拟机"></a>1 克隆虚拟机</h2><p>在VMware中克隆一台slave虚拟机的完整副本。<br><img src="/实战用ubuntu搭建Hadoop集群/cloneVM.png" alt="7"><br>在克隆虚拟机向导中选择克隆虚拟机的完整副本并更改虚拟机名字为我们需要的新节点名字。</p>
 <h2 id="2-更改主机名"><a href="#2-更改主机名" class="headerlink" title="2 更改主机名"></a>2 更改主机名</h2><p>更改配置文件<br><code>sudo vi /etc/hostname</code><br>在配置文件中主机名改为新节点主机名，重启主机生效。  </p>
-<h2 id="3-更改IP地址（静态）"><a href="#3-更改IP地址（静态）" class="headerlink" title="3 更改IP地址（静态）"></a>3 更改IP地址（静态）</h2><p>更改配置文件<br><code>sudo vi /etc/network/interfaces</code><br>在配置文件中把IP地址改为规划的IP地址。重启网卡生效，可使用以下命令：  </p>
-<pre><code>sudo ifdown eth0  
-sudo ifup eth0  
-</code></pre><h2 id="4-更改hosts文件"><a href="#4-更改hosts文件" class="headerlink" title="4 更改hosts文件"></a>4 更改hosts文件</h2><p>更改配置文件<br><code>sudo vi /etc/hosts</code><br>在配置文件中添加集群所有节点的主机名和IP地址，重启主机生效。  </p>
+<h2 id="3-更改IP地址（静态）"><a href="#3-更改IP地址（静态）" class="headerlink" title="3 更改IP地址（静态）"></a>3 更改IP地址（静态）</h2><p>更改网络配置文件<br><code>sudo vi /etc/network/interfaces</code><br>在配置文件中把IP地址改为规划的IP地址。重启网卡生效，可使用以下命令：<br><code>sudo ifdown eth0</code><br><code>sudo ifup eth0</code></p>
+<h2 id="4-更改hosts文件"><a href="#4-更改hosts文件" class="headerlink" title="4 更改hosts文件"></a>4 更改hosts文件</h2><p>更改配置文件<br><code>sudo vi /etc/hosts</code><br>在配置文件中添加集群所有节点的主机名和IP地址，重启主机生效。  </p>
 <h2 id="5-更改master中slave配置文件"><a href="#5-更改master中slave配置文件" class="headerlink" title="5 更改master中slave配置文件"></a>5 更改master中slave配置文件</h2><p>更改配置文件<br><code>sudo vi $HADOOP_HOME/etc/hadoop/slaves</code><br>在配置文件中添加所有DataNode的主机名。  </p>
-<h2 id="6-在NameNode上修改“hdfs-site-xml”文件"><a href="#6-在NameNode上修改“hdfs-site-xml”文件" class="headerlink" title="6 在NameNode上修改“hdfs-site.xml”文件"></a>6 在NameNode上修改“hdfs-site.xml”文件</h2><p>修改<code>replication</code>参数为<code>DataNode</code>节点的个数。</p>
-<pre><code>cd $HADOOP_HOME/etc/hadoop/  
-vi hdfs-site.xml  
-</code></pre><h2 id="7-在NameNode上启动Hadoop进程"><a href="#7-在NameNode上启动Hadoop进程" class="headerlink" title="7 在NameNode上启动Hadoop进程"></a>7 在NameNode上启动Hadoop进程</h2><pre><code>start-all.sh  
-</code></pre><p>至此就完成了新节点的添加，集群得到了扩展。</p>
+<h2 id="6-复制hadoop文件夹到新节点对应目录"><a href="#6-复制hadoop文件夹到新节点对应目录" class="headerlink" title="6 复制hadoop文件夹到新节点对应目录"></a>6 复制<code>hadoop</code>文件夹到新节点对应目录</h2><p>把<code>NameNode</code>的<code>hadoop</code>文件夹复制到新节点对应目录。可以先用<code>tar czvf hadoop-2.9.2.tar.gz hadoop-2.9.2</code>打包，用<code>scp master:/home/eacong/apache/hadoop/hadoop-2.9.2.tar.gz apache/hadoop/hadoop-2.9.2.tar.gz</code>传输到目标节点目录，再用<code>tar xzvf hadoop-2.9.2.tar.gz</code>命令解压缩。    </p>
+<h2 id="7-重新格式化NameNode-非常重要"><a href="#7-重新格式化NameNode-非常重要" class="headerlink" title="7 重新格式化NameNode(非常重要)"></a>7 重新格式化NameNode(非常重要)</h2><p>在<code>master</code>节点上格式化NameNode<br><code>hadoop namenode –format</code>  </p>
+<h2 id="8-重启Hadoop进程"><a href="#8-重启Hadoop进程" class="headerlink" title="8 重启Hadoop进程"></a>8 重启Hadoop进程</h2><p><code>start-all.sh</code><br>至此就完成了新节点的添加，集群得到了扩展。可以在web页面或者<code>NameNode</code>节点上用命令查看集群中<code>DataNode</code>节点数量有没有得到扩展。  </p>
 
       
 
@@ -443,7 +439,7 @@ vi hdfs-site.xml
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 Eacong Yin
+    		&copy; 2019 Eacong Yin
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -567,6 +563,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">网安所</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">CloudSim</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">仿真软件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">云计算</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Eclipse</a>
               </li>
             
             <div class="clearfix"></div>
