@@ -8,18 +8,25 @@
   <link rel="dns-prefetch" href="https://eacong.github.io">
   <title>Hadoop2.9.2源码编译 | Eacong&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在Ubuntu环境中编译修改过的Hadoop源码。">
+  <meta name="description" content="在Ubuntu环境中编译Hadoop2.9.2源码。">
 <meta name="keywords" content="Hadoop,源码,Maven,Ubuntu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hadoop2.9.2源码编译">
 <meta property="og:url" content="https://eacong.github.io/2019/03/14/Hadoop2.9.2源码编译/index.html">
 <meta property="og:site_name" content="Eacong&#39;s blog">
-<meta property="og:description" content="在Ubuntu环境中编译修改过的Hadoop源码。">
+<meta property="og:description" content="在Ubuntu环境中编译Hadoop2.9.2源码。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-14T06:07:18.556Z">
+<meta property="og:image" content="https://eacong.github.io/Hadoop2.9.2源码编译/manual_soft.png">
+<meta property="og:image" content="https://eacong.github.io/Hadoop2.9.2源码编译/folder.png">
+<meta property="og:image" content="https://eacong.github.io/Hadoop2.9.2源码编译/src.png">
+<meta property="og:image" content="https://eacong.github.io/Hadoop2.9.2源码编译/result.png">
+<meta property="og:image" content="https://eacong.github.io/Hadoop2.9.2源码编译/target.png">
+<meta property="og:image" content="https://eacong.github.io/Hadoop2.9.2源码编译/q1.png">
+<meta property="og:updated_time" content="2019-03-14T10:46:50.374Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop2.9.2源码编译">
-<meta name="twitter:description" content="在Ubuntu环境中编译修改过的Hadoop源码。">
+<meta name="twitter:description" content="在Ubuntu环境中编译Hadoop2.9.2源码。">
+<meta name="twitter:image" content="https://eacong.github.io/Hadoop2.9.2源码编译/manual_soft.png">
   
     <link rel="alternative" href="/atom.xml" title="Eacong&#39;s blog" type="application/atom+xml">
   
@@ -169,22 +176,22 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在Ubuntu环境中编译修改过的Hadoop源码。  </p>
+        <p>在Ubuntu环境中编译Hadoop2.9.2源码。  </p>
 <a id="more"></a>
 <h1 id="1-编译环境"><a href="#1-编译环境" class="headerlink" title="1 编译环境"></a>1 编译环境</h1><h2 id="1-1-硬件"><a href="#1-1-硬件" class="headerlink" title="1.1 硬件"></a>1.1 硬件</h2><ul>
-<li>Intel i5处理器，4核，3.2GHz</li>
+<li>Intel i5处理器，4核，3.2GHz，64位</li>
 <li>8GB内存</li>
 <li>Intel固态硬盘</li>
 </ul>
 <h2 id="1-2-软件"><a href="#1-2-软件" class="headerlink" title="1.2 软件"></a>1.2 软件</h2><ul>
-<li>Ubuntu 18.04 Desktop LST</li>
+<li>Ubuntu_x86 18.04 Desktop LST</li>
 <li>Jdk 1.7</li>
 <li>Maven 3.6.0</li>
 <li>ProtocolBuffer 2.5.0</li>
 <li>CMake 3.10.2</li>
 <li>其余软件要求同官方编译文档<code>BUILDING.TXT</code></li>
 </ul>
-<h1 id="2-编译过程"><a href="#2-编译过程" class="headerlink" title="2 编译过程"></a>2 编译过程</h1><h2 id="2-1-准备基础环境"><a href="#2-1-准备基础环境" class="headerlink" title="2.1 准备基础环境"></a>2.1 准备基础环境</h2><p>Hadoop官方编译文档中给出了编译的环境要求，如下所示：</p>
+<h1 id="2-编译过程"><a href="#2-编译过程" class="headerlink" title="2 编译过程"></a>2 编译过程</h1><h2 id="2-1-准备基础环境"><a href="#2-1-准备基础环境" class="headerlink" title="2.1 准备基础环境"></a>2.1 准备基础环境</h2><p>Hadoop官方编译文档中给出了编译的环境要求，具体如下：</p>
 <blockquote>
 <p>Requirements:</p>
 <ul>
@@ -199,13 +206,54 @@
 <li>Linux FUSE (Filesystem in Userspace) version 2.6 or above (if compiling fuse_dfs)</li>
 <li>Internet connection for first build (to fetch all Maven and Hadoop dependencies)</li>
 <li>python (for releasedocs)</li>
-<li>Node.js / bower / Ember-cli (for YARN UI v2 building)  </li>
+<li>Node.js / bower / Ember-cli (for YARN UI v2 building)</li>
 </ul>
 </blockquote>
-<p>首先安装好Ubuntu 18.04 Desktop，配置网络能连接互联网，其次更改国内源并更新系统，这个过程可以参考博客<a href="https://eacong.github.io/2018/12/04/%E5%AE%9E%E6%88%98%E7%94%A8ubuntu%E6%90%AD%E5%BB%BAHadoop%E9%9B%86%E7%BE%A4/">实战用ubuntu搭建Hadoop集群</a>中<code>2更改国内源</code>部分。<br>然后下载编译所需的依赖包，具体过程参考Hadoop官方编译文档，如下：  </p>
+<p>首先安装好Ubuntu 18.04 Desktop，配置网络能连接互联网，其次更改国内源并更新系统，这个过程可以参考博客<a href="https://eacong.github.io/2018/12/04/%E5%AE%9E%E6%88%98%E7%94%A8ubuntu%E6%90%AD%E5%BB%BAHadoop%E9%9B%86%E7%BE%A4/">实战用ubuntu搭建Hadoop集群</a>中<code>2更改国内源</code>部分。  </p>
+<h2 id="2-1-准备编译环境"><a href="#2-1-准备编译环境" class="headerlink" title="2.1 准备编译环境"></a>2.1 准备编译环境</h2><p>下载安装编译所需的软件包，所需的软件包参考Hadoop官方编译文档，具体如下：  </p>
 <blockquote>
+<p>Installing required packages for clean install of Ubuntu 14.04 LTS Desktop:</p>
+<ul>
+<li>Oracle JDK 1.7 (preferred)<br>$ sudo apt-get purge openjdk*<br>$ sudo apt-get install software-properties-common<br>$ sudo add-apt-repository ppa:webupd8team/java<br>$ sudo apt-get update<br>$ sudo apt-get install oracle-java7-installer</li>
+<li>Maven<br>$ sudo apt-get -y install maven</li>
+<li>Native libraries<br>$ sudo apt-get -y install build-essential autoconf automake libtool cmake zlib1g-dev pkg-config libssl-dev</li>
+<li>ProtocolBuffer 2.5.0 (required)<br>$ sudo apt-get -y install protobuf-compiler<br>Optional packages:</li>
+<li>Snappy compression<br>$ sudo apt-get install snappy libsnappy-dev</li>
+<li>Bzip2<br>$ sudo apt-get install bzip2 libbz2-dev</li>
+<li>Jansson (C Library for JSON)<br>$ sudo apt-get install libjansson-dev</li>
+<li>Linux FUSE<br>$ sudo apt-get install fuse libfuse-dev  </li>
+</ul>
 </blockquote>
-<h2 id="2-1-下载源码"><a href="#2-1-下载源码" class="headerlink" title="2.1 下载源码"></a>2.1 下载源码</h2><h1 id="编译结果"><a href="#编译结果" class="headerlink" title="编译结果"></a>编译结果</h1><h1 id="可能遇到的问题及解决方案"><a href="#可能遇到的问题及解决方案" class="headerlink" title="可能遇到的问题及解决方案"></a>可能遇到的问题及解决方案</h1>
+<p>需要注意的是，用<code>apt-get</code>命令从网络的软件仓库中得到的往往是最新版本，最新版本的特性可能与文档中要求版本不同，所以某些软件应该采用手动下载对应版本并手动安装的方式。</p>
+<p>手动安装的软件列表如下：</p>
+<ul>
+<li>jdk 1.7</li>
+<li>maven 3.6.0</li>
+<li>protocbuf 2.5.0</li>
+</ul>
+<p>将下载好的软件放在用户主目录并解压，如下图所示：<br><img src="/Hadoop2.9.2源码编译/manual_soft.png" alt="manual_soft"><br><img src="/Hadoop2.9.2源码编译/folder.png" alt="folder"><br>其中<code>jdk</code>和<code>maven</code>只需要在<code>~/.bashrc</code>文件中添加环境变量，再用<code>source ~/.bashrc</code>命令更新一下即可使用。<br><code>jdk</code>和<code>maven</code>相关环境变量如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#java</span><br><span class="line">export JAVA_HOME=/home/eacong/jdk1.7.0_79</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span><br><span class="line">export PATH=$PATH:$&#123;JAVA_HOME&#125;/bin</span><br><span class="line">#maven</span><br><span class="line">export MAVEN_HOME=/home/eacong/apache-maven-3.6.0</span><br><span class="line">export PATH=$PATH:$&#123;MAVEN_HOME&#125;/bin</span><br></pre></td></tr></table></figure></p>
+<p>而<code>protocbuf</code>需要手动编译，参见博客<a href="https://www.cnblogs.com/learn21cn/p/6206206.html" target="_blank" rel="noopener">protobuf的编译安装</a>。<br>进入<code>protocbuf-2.5.0</code>文件夹，依次使用以下命令安装<code>protocbuf</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ./autogen.sh</span><br><span class="line">$ ./configure --prefix=/usr/local/protobuf</span><br><span class="line">$ make</span><br><span class="line">$ make check</span><br><span class="line">$ make install</span><br><span class="line">$ ldconfig</span><br></pre></td></tr></table></figure></p>
+<p>最后添加环境变量到<code>~/.bashrc</code>文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#protocbuf</span><br><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/eacong/protoc-2.5.0/lib</span><br><span class="line">export LIBRARY_PATH=$LIBRARY_PATH:/home/eacong/protoc-2.5.0/lib</span><br><span class="line">export PATH=$PATH:/home/eacong/protoc-2.5.0/lib</span><br></pre></td></tr></table></figure></p>
+<p>最后用<code>source ~/.bashrc</code>命令更新使生效即可。<br>其它软件通过命令的方式安装，包括以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get -y install build-essential autoconf automake libtool cmake zlib1g-dev pkg-config libssl-dev</span><br><span class="line">$ sudo apt-get install snappy libsnappy-dev</span><br><span class="line">$ sudo apt-get install bzip2 libbz2-dev</span><br><span class="line">$ sudo apt-get install libjansson-dev</span><br><span class="line">$ sudo apt-get install fuse libfuse-dev</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-2-下载源码"><a href="#2-2-下载源码" class="headerlink" title="2.2 下载源码"></a>2.2 下载源码</h2><p>源码全部从官方下载，2.9.2版本的地址：<a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.9.2/hadoop-2.9.2-src.tar.gz" target="_blank" rel="noopener">https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.9.2/hadoop-2.9.2-src.tar.gz</a>，下载并解压，如图：<br><img src="/Hadoop2.9.2源码编译/src.png" alt="src"></p>
+<h2 id="2-3-编译源码"><a href="#2-3-编译源码" class="headerlink" title="2.3 编译源码"></a>2.3 编译源码</h2><p>编译命令参考官方编译文档，如下所示：</p>
+<blockquote>
+<p>Building distributions:</p>
+<ul>
+<li>Create binary distribution without native code and without documentation:<br>$ mvn package -Pdist -DskipTests -Dtar -Dmaven.javadoc.skip=true</li>
+<li>Create binary distribution with native code and with documentation:<br>$ mvn package -Pdist,native,docs -DskipTests -Dtar</li>
+<li>Create source distribution:<br>$ mvn package -Psrc -DskipTests</li>
+<li>Create source and binary distributions with native code and documentation:<br>$ mvn package -Pdist,native,docs,src -DskipTests -Dtar</li>
+<li>Create a local staging version of the website (in /tmp/hadoop-site)<br>$ mvn clean site -Preleasedocs; mvn site:stage -DstagingDirectory=/tmp/hadoop-site</li>
+</ul>
+</blockquote>
+<p>根据需要选择命令来编译，由于我们此次编译好了还要对编译好的文件进行测试，所以选择第二条命令，为缩短编译时间，去掉<code>docs</code>参数，最终编译命令为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn package -Pdist,native -DskipTests -Dtar</span><br></pre></td></tr></table></figure></p>
+<p>在解压的Hadoop源代码文件夹的任何一个子模块目录中输入命令都可以，我们在根目录下输入编译命令，等待运行结果，第一次编译的话需要等待的时间较长。</p>
+<h1 id="3-编译结果"><a href="#3-编译结果" class="headerlink" title="3 编译结果"></a>3 编译结果</h1><p>编译结果如下：<br><img src="/Hadoop2.9.2源码编译/result.png" alt="result"><br>打包好的压缩包<code>hadoop-2.9.2.tar.gz</code>在<code>hadoop-dist/target</code>路径下，如图：<br><img src="/Hadoop2.9.2源码编译/target.png" alt="target"><br>用这个包即可搭建hdfs集群了，相关过程参考博客<a href="https://eacong.github.io/2018/12/04/%E5%AE%9E%E6%88%98%E7%94%A8ubuntu%E6%90%AD%E5%BB%BAHadoop%E9%9B%86%E7%BE%A4/">实战用ubuntu搭建Hadoop集群</a>。</p>
+<h1 id="4可能遇到的问题及解决方案"><a href="#4可能遇到的问题及解决方案" class="headerlink" title="4可能遇到的问题及解决方案"></a>4可能遇到的问题及解决方案</h1><p>1 问题：出现<code>Could not find artifact com.amazonaws:DynamoDBLocal</code>异常。<br>解决办法：修改<code>maven</code>的<code>setting.xml</code>文件，位于maven主目录下的conf文件夹中，修改<code>&lt;mirrors&gt;</code>之间的参数为：<br><img src="/Hadoop2.9.2源码编译/q1.png" alt="q1"><br>2 问题：出现<code>Failed to execute goal org.apache.hadoop:hadoop-maven-plugins:3.0.0-alpha4:cmake-compile (cmake-compile) on project hadoop-mapreduce-client-nativetask: make failed with error code 2 -&gt; [Help 1]</code>异常。<br>解决办法：执行这条编译命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package -DskipTests -Dtar</span><br></pre></td></tr></table></figure></p>
+<p>3 问题：出现<code>Failed to read artifact descriptor for org.fusesource.leveldbjni:leveldbjni-all:jar:1.8: Could not transfer artifact org.fusesource.leveldbjni:leveldbjni-project:pom:1.8 from/to nexus (http://maven.aliyun.com/nexus/content/groups/public/): Connection reset -&gt; [Help 1]</code>异常。<br>解决办法：修改maven的源，添加以下阿里源maven仓库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">&lt;mirrors&gt;</span><br><span class="line">    &lt;mirror&gt;</span><br><span class="line">        &lt;id&gt;aliyun-public&lt;/id&gt;</span><br><span class="line">        &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">        &lt;name&gt;aliyun public&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;https://maven.aliyun.com/repository/public&lt;/url&gt;</span><br><span class="line">    &lt;/mirror&gt;</span><br><span class="line">    &lt;mirror&gt;</span><br><span class="line">        &lt;id&gt;aliyun-central&lt;/id&gt;</span><br><span class="line">        &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">        &lt;name&gt;aliyun central&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;https://maven.aliyun.com/repository/central&lt;/url&gt;</span><br><span class="line">    &lt;/mirror&gt;</span><br><span class="line">    &lt;mirror&gt;</span><br><span class="line">        &lt;id&gt;aliyun-spring&lt;/id&gt;</span><br><span class="line">        &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">        &lt;name&gt;aliyun spring&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;https://maven.aliyun.com/repository/spring&lt;/url&gt;</span><br><span class="line">    &lt;/mirror&gt;</span><br><span class="line">    &lt;mirror&gt;</span><br><span class="line">        &lt;id&gt;aliyun-spring-plugin&lt;/id&gt;</span><br><span class="line">        &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">        &lt;name&gt;aliyun spring-plugin&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;https://maven.aliyun.com/repository/spring-plugin&lt;/url&gt;</span><br><span class="line">    &lt;/mirror&gt;</span><br><span class="line">    &lt;mirror&gt;</span><br><span class="line">        &lt;id&gt;aliyun-apache-snapshots&lt;/id&gt;</span><br><span class="line">        &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">        &lt;name&gt;aliyun apache-snapshots&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;https://maven.aliyun.com/repository/apache-snapshots&lt;/url&gt;</span><br><span class="line">    &lt;/mirror&gt;</span><br><span class="line">    &lt;mirror&gt;</span><br><span class="line">        &lt;id&gt;aliyun-google&lt;/id&gt;</span><br><span class="line">        &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">        &lt;name&gt;aliyun google&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;https://maven.aliyun.com/repository/google&lt;/url&gt;</span><br><span class="line">    &lt;/mirror&gt;</span><br><span class="line">    &lt;mirror&gt;</span><br><span class="line">        &lt;id&gt;aliyun-gradle-plugin&lt;/id&gt;</span><br><span class="line">        &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">        &lt;name&gt;aliyun gradle-plugin&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;https://maven.aliyun.com/repository/gradle-plugin&lt;/url&gt;</span><br><span class="line">    &lt;/mirror&gt;</span><br><span class="line">    &lt;mirror&gt;</span><br><span class="line">        &lt;id&gt;aliyun-jcenter&lt;/id&gt;</span><br><span class="line">        &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">        &lt;name&gt;aliyun jcenter&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;https://maven.aliyun.com/repository/jcenter&lt;/url&gt;</span><br><span class="line">    &lt;/mirror&gt;</span><br><span class="line">    &lt;mirror&gt;</span><br><span class="line">        &lt;id&gt;aliyun-releases&lt;/id&gt;</span><br><span class="line">        &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">        &lt;name&gt;aliyun releases&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;https://maven.aliyun.com/repository/releases&lt;/url&gt;</span><br><span class="line">    &lt;/mirror&gt;</span><br><span class="line">    &lt;mirror&gt;</span><br><span class="line">        &lt;id&gt;aliyun-snapshots&lt;/id&gt;</span><br><span class="line">        &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">        &lt;name&gt;aliyun snapshots&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;https://maven.aliyun.com/repository/snapshots&lt;/url&gt;</span><br><span class="line">    &lt;/mirror&gt;</span><br><span class="line">    &lt;mirror&gt;</span><br><span class="line">        &lt;id&gt;aliyun-grails-core&lt;/id&gt;</span><br><span class="line">        &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">        &lt;name&gt;aliyun grails-core&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;https://maven.aliyun.com/repository/grails-core&lt;/url&gt;</span><br><span class="line">    &lt;/mirror&gt;</span><br><span class="line">    &lt;mirror&gt;</span><br><span class="line">        &lt;id&gt;aliyun-mapr-public&lt;/id&gt;</span><br><span class="line">        &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">        &lt;name&gt;aliyun mapr-public&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;https://maven.aliyun.com/repository/mapr-public&lt;/url&gt;</span><br><span class="line">    &lt;/mirror&gt;</span><br><span class="line">&lt;/mirrors&gt;</span><br></pre></td></tr></table></figure>
+
       
 
       
