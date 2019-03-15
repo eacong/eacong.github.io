@@ -23,9 +23,10 @@
 <meta property="og:image" content="https://eacong.github.io/Hadoop2.9.2源码编译/src.png">
 <meta property="og:image" content="https://eacong.github.io/Hadoop2.9.2源码编译/result.png">
 <meta property="og:image" content="https://eacong.github.io/Hadoop2.9.2源码编译/target.png">
+<meta property="og:image" content="https://eacong.github.io/Hadoop2.9.2源码编译/hdfsbuild.png">
 <meta property="og:image" content="https://eacong.github.io/Hadoop2.9.2源码编译/hdfsjar.png">
 <meta property="og:image" content="https://eacong.github.io/Hadoop2.9.2源码编译/q1.png">
-<meta property="og:updated_time" content="2019-03-14T13:38:12.067Z">
+<meta property="og:updated_time" content="2019-03-15T12:05:56.785Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop2.9.2源码编译">
 <meta name="twitter:description" content="在Ubuntu环境中编译Hadoop2.9.2源码。">
@@ -264,11 +265,13 @@
 </ul>
 </blockquote>
 <p>根据需要选择命令来编译，由于我们此次编译好了还要对编译好的文件进行测试，所以选择第二条命令，为缩短编译时间，去掉<code>docs</code>参数，最终编译命令为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn package -Pdist,native -DskipTests -Dtar</span><br></pre></td></tr></table></figure></p>
-<p>在解压的Hadoop源代码文件夹的任何一个子模块目录中输入命令都可以，我们在根目录下输入编译命令，等待运行结果，第一次编译的话需要等待的时间较长。</p>
-<h1 id="3-编译结果"><a href="#3-编译结果" class="headerlink" title="3 编译结果"></a>3 编译结果</h1><p>编译结果如下：<br><img src="/Hadoop2.9.2源码编译/result.png" alt="result"></p>
+<p>在解压的Hadoop源代码文件夹根目录输入编译命令则编译整个hadoop项目，也可以在子模块文件夹中输入编译命令则只编译该模块，我们在根目录下输入编译命令，等待运行结果，第一次编译的话需要等待的时间较长。</p>
+<h1 id="3-编译结果"><a href="#3-编译结果" class="headerlink" title="3 编译结果"></a>3 编译结果</h1><p>编译hadoop结果如下：<br><img src="/Hadoop2.9.2源码编译/result.png" alt="result"></p>
 <p>打包好的压缩包<code>hadoop-2.9.2.tar.gz</code>在<code>hadoop-dist/target</code>路径下，如图：<br><img src="/Hadoop2.9.2源码编译/target.png" alt="target"></p>
-<p>用这个包即可搭建hdfs集群了，相关过程参考博客<a href="https://eacong.github.io/2018/12/04/%E5%AE%9E%E6%88%98%E7%94%A8ubuntu%E6%90%AD%E5%BB%BAHadoop%E9%9B%86%E7%BE%A4/">实战用ubuntu搭建Hadoop集群</a>。</p>
-<p>也可以将某个子模块下生成的某一类jar放入集群做测试。以hdfs为例，生成hdfs包是<code>hadoop-hdfs-2.9.2.jar</code>，存放的路径是<code>~/hadoop-2.9.2-src/hadoop-hdfs-project/hadoop-hdfs/target</code>,如下图：<br><img src="/Hadoop2.9.2源码编译/hdfsjar.png" alt="hdfsjar"></p>
+<p>用这个压缩包即可搭建hdfs集群了，相关过程参考博客<a href="https://eacong.github.io/2018/12/04/%E5%AE%9E%E6%88%98%E7%94%A8ubuntu%E6%90%AD%E5%BB%BAHadoop%E9%9B%86%E7%BE%A4/">实战用ubuntu搭建Hadoop集群</a>。</p>
+<p>也可以只编译hadoop的某个子模块，然后将某个子模块下生成的某一类jar放入集群做测试。</p>
+<p>以hdfs为例，在<code>hadoop-hdfs-project</code>文件夹中输入编译命令，则系统只编译hdfs模块，编译结果如图：<br><img src="/Hadoop2.9.2源码编译/hdfsbuild.png" alt="hdfsbuild"></p>
+<p>生成hdfs包是<code>hadoop-hdfs-2.9.2.jar</code>，存放的路径是<code>~/hadoop-2.9.2-src/hadoop-hdfs-project/hadoop-hdfs/target</code>,如下图：<br><img src="/Hadoop2.9.2源码编译/hdfsjar.png" alt="hdfsjar"></p>
 <p>此时将该jar包拷贝下来，放进集群目录的<code>$HADOOP_HOME/share/hadoop/hdfs/</code>路径下（先备份原来的hadoop-hdfs-2.9.2.jar包），就可以测试hdfs模块了。</p>
 <h1 id="4可能遇到的问题及解决方案"><a href="#4可能遇到的问题及解决方案" class="headerlink" title="4可能遇到的问题及解决方案"></a>4可能遇到的问题及解决方案</h1><p>1 问题：出现<code>Could not find artifact com.amazonaws:DynamoDBLocal</code>异常。<br>解决办法：修改<code>maven</code>的<code>setting.xml</code>文件，位于maven主目录下的conf文件夹中，修改<code>&lt;mirrors&gt;</code>之间的参数为：<br><img src="/Hadoop2.9.2源码编译/q1.png" alt="q1"><br>2 问题：出现<code>Failed to execute goal org.apache.hadoop:hadoop-maven-plugins:3.0.0-alpha4:cmake-compile (cmake-compile) on project hadoop-mapreduce-client-nativetask: make failed with error code 2 -&gt; [Help 1]</code>异常。<br>解决办法：执行这条编译命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package -DskipTests -Dtar</span><br></pre></td></tr></table></figure></p>
 <p>3 问题：出现<code>Failed to read artifact descriptor for org.fusesource.leveldbjni:leveldbjni-all:jar:1.8: Could not transfer artifact org.fusesource.leveldbjni:leveldbjni-project:pom:1.8 from/to nexus (http://maven.aliyun.com/nexus/content/groups/public/): Connection reset -&gt; [Help 1]</code>异常。<br>解决办法：修改maven的源，将源替换为阿里源maven仓库，代码如下：</p>
